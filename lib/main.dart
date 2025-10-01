@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import 'pages/home_page.dart';
-import 'pages/courses_page.dart';
-import 'pages/chats_page.dart';
-import 'pages/profile.dart';
+import 'pages/chats/home_page.dart';
+import 'pages/cources/courses_page.dart';
+import 'pages/chats/chats_page.dart';
+import 'pages/chats/profile.dart';
 
 
 void main() => runApp(const MyApp());
