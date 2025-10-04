@@ -18,6 +18,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFCEFEF), // لون الخلفية
+
+    appBar: AppBar(
+      
+    ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -73,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                             const CircleAvatar(
                               radius: 22,
                               backgroundImage:
-                                  AssetImage("assets/profile.png"), // مؤقتة
+                                  AssetImage("assets/images/profile.png"), // مؤقتة
                             ),
                           ],
                         ),
@@ -150,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.asset(
-                              'assets/english.jpg',
+                              'assets/images/english.jpg',
                               width: 70,
                               height: 70,
                               fit: BoxFit.cover,
@@ -251,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                             top: Radius.circular(15),
                           ),
                           child: Image.asset(
-                            'assets/english.jpg',
+                            'assets/images/english.jpg',
                             height: 90,
                             width: double.infinity,
                             fit: BoxFit.cover,
