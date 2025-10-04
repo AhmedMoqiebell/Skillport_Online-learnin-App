@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'pages/chats/home_page.dart';
 import 'pages/cources/courses_page.dart';
 import 'pages/chats/chats_page.dart';
 import 'pages/chats/profile.dart';
+import 'pages/home/homepage.dart';
 
 
 void main() => runApp(const MyApp());
@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
   int _currentIndex = 0; 
 
   final List<Widget> _pages = [
-    HomePage(),
+    HomePage(username: ''),
     CoursesPage(),
     ChatsPage(),
     ProfilePage(),
