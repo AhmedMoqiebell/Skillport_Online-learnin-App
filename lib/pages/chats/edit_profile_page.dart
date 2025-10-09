@@ -5,20 +5,33 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final colorScheme = Theme.of(context).colorScheme;
+    final textOnBackground = colorScheme.onBackground;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFFBF3F2),
+
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: colorScheme.background, 
         elevation: 0,
+
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(
+            Icons.arrow_back,
+            color: textOnBackground,
+          ), // لون الأيقونة يتغير مع الثيم
           onPressed: () => Navigator.pop(context),
         ),
+
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Edit Profile',
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            // 💡 
+            color: textOnBackground,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -26,28 +39,31 @@ class EditProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // صورة البروفايل
+            
             CircleAvatar(
               radius: 50,
               backgroundImage: const AssetImage('assets/images/profile.png'),
-              backgroundColor: Colors.white,
+              // 💡 يجب أن تكون الخلفية متوافقة مع الثيم الفاتح/الداكن
+              backgroundColor: colorScheme.surface,
             ),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Ahmed',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: textOnBackground, // 💡 لون النص الأساسي
+              ),
             ),
-            const Text(
+            Text(
               'amoqiebel736@gmail.com',
-              style: TextStyle(color: Colors.black54),
+              // 💡 لون نص ثانوي (لون نص الخلفية مع شفافية)
+              style: TextStyle(color: textOnBackground.withOpacity(0.6)),
             ),
             const SizedBox(height: 30),
 
             // عناصر الإعدادات
-            const _EditOption(
-              icon: Icons.person_outline,
-              title: 'Edit Name',
-            ),
+            const _EditOption(icon: Icons.person_outline, title: 'Edit Name'),
             const _EditOption(
               icon: Icons.lock_outline,
               title: 'Change Password',
@@ -62,9 +78,13 @@ class EditProfilePage extends StatelessWidget {
             // زر تسجيل الخروج
             ElevatedButton(
               style: ElevatedButton.styleFrom(
+                // 💡 اللون الأحمر الثابت (للتنبيه/الخروج)
                 backgroundColor: const Color(0xFFD44035),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 12),
+                foregroundColor: Colors.white, // النص يبقى أبيض
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 50,
+                  vertical: 12,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -72,10 +92,7 @@ class EditProfilePage extends StatelessWidget {
               onPressed: () {
                 // ضع كود تسجيل الخروج هنا
               },
-              child: const Text(
-                'Log out',
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
+              child: const Text('Log out', style: TextStyle(fontSize: 16)),
             ),
           ],
         ),
@@ -88,18 +105,34 @@ class EditProfilePage extends StatelessWidget {
 class _EditOption extends StatelessWidget {
   final IconData icon;
   final String title;
-  const _EditOption({required this.icon, required this.title});
+
+  // 💡 يجب أن يكون المنشئ ثابتاً (Const) لتجنب الأخطاء
+  const _EditOption({super.key, required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {
+    // 💡 استخدام اللون الأساسي (Primary) لـ Theme.of(context)
+    final primaryColor = Theme.of(context).colorScheme.primary;
+    final textOnBackground = Theme.of(context).colorScheme.onBackground;
+
     return ListTile(
-      leading: Icon(icon, color: const Color(0xFFD44035)),
+      leading: Icon(
+        icon,
+        color: primaryColor,
+      ), // 💡 الأيقونة بلون الثيم الأساسي
       title: Text(
         title,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: textOnBackground, // 💡 النص بلون متوافق مع الثيم
+        ),
       ),
-      trailing: const Icon(Icons.arrow_forward_ios,
-          size: 16, color: Color(0xFFD44035)),
+      trailing: Icon(
+        Icons.arrow_forward_ios,
+        size: 16,
+        color: primaryColor,
+      ), // 💡 الأيقونة بلون الثيم الأساسي
       onTap: () {
         // اضف التنقل لصفحات التعديل الخاصة بكل خيار
       },
