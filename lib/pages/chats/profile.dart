@@ -1,38 +1,60 @@
 import 'package:flutter/material.dart';
 import 'edit_profile_page.dart';
+import '../../main.dart'; // 👈 للوصول إلى MyApp.of(context)
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  // 💡 تم حذف isDarkMode = false;
+  // سنعتمد على Theme.of(context) لمعرفة حالة الثيم الحالية
+
+  @override
   Widget build(BuildContext context) {
+    // 💡 استخدام isDark مباشرة من الثيم
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFFBF3F2),
+      
       body: Stack(
         children: [
           // ===== محتوى الصفحة القابل للتمرير =====
           SingleChildScrollView(
-            padding: const EdgeInsets.only(top: 200), // عشان تترك مساحة للصورة
+            padding: const EdgeInsets.only(top: 200),
             child: Column(
               children: [
-                const SizedBox(height: 60), // فراغ تحت الصورة
-                const Text(
+                const SizedBox(height: 60),
+                Text(
                   'Ahmed',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    // 💡 استخدام onBackground للون النص الأساسي
+                    color: colorScheme.onBackground,
                   ),
                 ),
-                const Text(
+                Text(
                   'amoqiebel736@gmail.com',
-                  style: TextStyle(color: Colors.black54),
+                  // 💡 استخدام لون نص ثانوي
+                  style: TextStyle(
+                    color: colorScheme.onBackground.withOpacity(0.6),
+                  ),
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD44035),
-                    foregroundColor: Colors.white,
+                    // 💡 استخدام primaryColor
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor:
+                        colorScheme.onPrimary, // لون النص على primaryColor
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -55,11 +77,11 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 // ===== مربعات الاحصائيات =====
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       _StatBox(icon: Icons.menu_book, label: '15 Courses'),
                       _StatBox(icon: Icons.star, label: '4.9 Reviews'),
                       _StatBox(icon: Icons.access_time, label: '21 Hours'),
@@ -70,10 +92,17 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 // ===== خيارات القائمة =====
-                const _OptionTile(
+                _OptionTile(
                   icon: Icons.dark_mode,
                   title: 'Dark Mode',
                   hasSwitch: true,
+                  // 💡 القيمة الأولية للسويتش: هي حالة الثيم الحالية (isDark)
+                  switchValue: isDark,
+                  onSwitchChanged: (val) {
+                    // 🔥 عند التبديل، نغير الثيم فقط في MyApp
+                    MyApp.of(context)?.toggleTheme(val);
+                    // 💡 لا نحتاج لـ setState هنا لأن تغيير الثيم سيقوم بإعادة بناء (rebuild) كل الـ Widgets تلقائياً
+                  },
                 ),
                 const _OptionTile(
                   icon: Icons.payment,
@@ -96,35 +125,44 @@ class ProfilePage extends StatelessWidget {
           // ===== AppBar متدرج =====
           Container(
             height: 150,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment(-0.07, -0.06),
-                end: Alignment(0.65, 0.87),
-                colors: [Color(0xFFD44035), Color(0xFFF16055)],
+                begin: const Alignment(-0.07, -0.06),
+                end: const Alignment(0.65, 0.87),
+                // 💡 استخدام الألوان الثابتة المتدرجة (Gradient)
+                colors: isDark
+                    ? const [
+                        Color(0xFF861B13),
+                        Color(0xFFCA352B),
+                      ] // ألوان أغمق للداكن
+                    : const [
+                        Color(0xFFD44035),
+                        Color(0xFFF16055),
+                      ], // ألوان أفتح للفاتح
               ),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
               ),
             ),
             alignment: const Alignment(0, 0.4),
-            child: const Text(
+            child: Text(
               'Profile',
-              style: TextStyle(
-                fontSize: 22,
+              style: textTheme.headlineSmall?.copyWith(
+                // استخدام نمط نص من الثيم
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.white, // النص يبقى أبيض على خلفية متدرجة داكنة
               ),
             ),
           ),
 
-          // ===== صورة البروفايل وسط الـ AppBar والـ body =====
+          // ===== صورة البروفايل =====
           Positioned(
             top: 120,
             left: MediaQuery.of(context).size.width / 2 - 50,
             child: CircleAvatar(
               radius: 50,
-              backgroundColor: Colors.white,
+              backgroundColor: colorScheme.background, // لون خلفية الثيم
               child: const CircleAvatar(
                 radius: 46,
                 backgroundImage: AssetImage('assets/images/profile.png'),
@@ -137,7 +175,7 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-// مربع احصائيات
+// ===== مربع احصائيات =====
 class _StatBox extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -145,18 +183,21 @@ class _StatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 💡 الاعتماد على ColorScheme
+    final primaryColor = Theme.of(context).colorScheme.primary;
+
     return Container(
       width: 100,
       height: 60,
       decoration: BoxDecoration(
-        color: const Color(0xFFD44035),
+        color: primaryColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: Colors.white, size: 20),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(
             label,
             style: const TextStyle(color: Colors.white, fontSize: 12),
@@ -167,36 +208,45 @@ class _StatBox extends StatelessWidget {
   }
 }
 
-// عنصر خيار قائمة
+// ===== عنصر خيار قائمة =====
 class _OptionTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final bool hasSwitch;
+  final bool? switchValue;
+  final Function(bool)? onSwitchChanged;
+
   const _OptionTile({
     required this.icon,
     required this.title,
     this.hasSwitch = false,
+    this.switchValue,
+    this.onSwitchChanged,
   });
 
   @override
   Widget build(BuildContext context) {
+    // 💡 الاعتماد على ColorScheme
+    final iconColor = Theme.of(context).colorScheme.primary;
+
     return ListTile(
-      leading: Icon(icon, color: Color(0xFFD44035)), // أيقونات باللون الأسود
+      leading: Icon(icon, color: iconColor),
       title: Text(
         title,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          // 💡 استخدام onBackground كلون نص أساسي
+          color: Theme.of(context).colorScheme.onBackground,
+        ),
       ),
       trailing: hasSwitch
           ? Switch(
-              value: false,
-              activeThumbColor: const Color(0xFFD44035),
-              onChanged: (val) {},
+              value: switchValue ?? false,
+              activeColor: iconColor,
+              onChanged: onSwitchChanged,
             )
-          : const Icon(
-              Icons.arrow_forward_ios,
-              size: 16,
-              color: Color(0xFFD44035),
-            ),
+          : Icon(Icons.arrow_forward_ios, size: 16, color: iconColor),
       onTap: () {},
     );
   }

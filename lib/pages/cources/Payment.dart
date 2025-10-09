@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'About.dart';
 import 'ConfirmPayment.dart';
+
 class Payment extends StatefulWidget {
   const Payment({super.key});
 
@@ -28,30 +29,26 @@ class _PaymentState extends State<Payment> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  About()),
+              MaterialPageRoute(builder: (context) => About()),
             );
           },
-          child: const Icon(
-            Icons.chevron_left,
-            size: 60,
-          ),
+          child: const Icon(Icons.chevron_left, size: 60),
         ),
         title: const Text(
           'Payment',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(   // <-- هنا لف الكولمن بالسكرول
+      body: SingleChildScrollView(
+        // <-- هنا لف الكولمن بالسكرول
         child: Column(
           children: [
             const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(15.0),
               child: Container(
+                height: 102,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
@@ -92,8 +89,10 @@ class _PaymentState extends State<Payment> {
                           SizedBox(height: 10),
                           Text(
                             "Learn more about how to build Design system and UI Design",
-                            style: TextStyle(fontSize: 13, overflow: TextOverflow.fade),
-
+                            style: TextStyle(
+                              fontSize: 13,
+                              overflow: TextOverflow.fade,
+                            ),
                           ),
                         ],
                       ),
@@ -109,10 +108,7 @@ class _PaymentState extends State<Payment> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Choose Your Method",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -128,17 +124,18 @@ class _PaymentState extends State<Payment> {
                         selectedIndex = index;
                       });
 
-
                       if (method["title"] == "Credit Card") {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Confirm_Payment()),
+                          MaterialPageRoute(
+                            builder: (context) => Confirm_Payment(),
+                          ),
                         );
                       }
                     },
                     child: Container(
                       width: double.infinity,
-                      height: 70,
+                      height: 63,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(18),
                         gradient: const LinearGradient(
@@ -195,7 +192,6 @@ class _PaymentState extends State<Payment> {
                 );
               }),
             ),
-
           ],
         ),
       ),
