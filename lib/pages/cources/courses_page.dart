@@ -82,10 +82,8 @@ class _My_CoursesState extends State<CoursesPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
-        leading: MaterialButton(
-          onPressed: () {},
-          child: const Icon(Icons.chevron_left, size: 60),
-        ),
+
+        // leading:
         title: const Text(
           'My Courses',
           style: TextStyle(
