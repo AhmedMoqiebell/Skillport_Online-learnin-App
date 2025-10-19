@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 import 'chat_detail.dart';
 
-class ChatsPage extends StatelessWidget {
-  const ChatsPage({super.key});
 
+class ChatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     final size = MediaQuery.of(context).size;
     final height = size.height;
     final width = size.width;
 
-    double font(double v) => v * width / 390;
-    double h(double v) => v * height / 844;
+    
+    double font(double v) => v * width / 390;   
+    double h(double v) => v * height / 844;     
     double w(double v) => v * width / 390;
 
-    // الألوان من الثيم الحالي
-    final theme = Theme.of(context);
-    final primary = theme.primaryColor;
-    final background = theme.scaffoldBackgroundColor;
-    final textColor = theme.textTheme.bodyMedium!.color;
-
     return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
+        backgroundColor:AppColors.secondaryLight,
+        
         title: Text(
           'Chats',
           style: TextStyle(
-            color: textColor,
+            color: Colors.black,
             fontSize: font(25),
             fontWeight: FontWeight.bold,
           ),
@@ -43,16 +42,14 @@ class ChatsPage extends StatelessWidget {
             child: Container(
               height: h(55),
               decoration: BoxDecoration(
-                color: background,
+                color: const Color(0xFFFBF3F2),
                 borderRadius: BorderRadius.circular(h(27.5)),
-                border: Border.all(color: primary, width: 1),
+                border: Border.all(color: const Color(0xFFD44035), width: 1),
               ),
-              child: TextField(
-                style: TextStyle(color: textColor),
+              child: const TextField(
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search, color: textColor!.withOpacity(0.6)),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey),
                   hintText: 'Search here',
-                  hintStyle: TextStyle(color: textColor.withOpacity(0.5)),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(vertical: 14),
                 ),
@@ -60,6 +57,7 @@ class ChatsPage extends StatelessWidget {
             ),
           ),
 
+          
           Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: w(16)),
@@ -69,7 +67,7 @@ class ChatsPage extends StatelessWidget {
                   Text(
                     "Active",
                     style: TextStyle(
-                      color: textColor,
+                      color: const Color(0xff0F0606),
                       fontSize: font(20),
                       fontWeight: FontWeight.bold,
                     ),
@@ -97,10 +95,7 @@ class ChatsPage extends StatelessWidget {
                               SizedBox(height: h(6)),
                               Text(
                                 'User $index',
-                                style: TextStyle(
-                                  fontSize: font(12),
-                                  color: textColor,
-                                ),
+                                style: TextStyle(fontSize: font(12)),
                               ),
                             ],
                           ),
@@ -113,7 +108,7 @@ class ChatsPage extends StatelessWidget {
                   Text(
                     "Messages",
                     style: TextStyle(
-                      color: textColor,
+                      color: const Color(0xff0F0606),
                       fontSize: font(20),
                       fontWeight: FontWeight.bold,
                     ),
@@ -161,7 +156,6 @@ class ChatsPage extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: font(16),
                                       fontWeight: FontWeight.bold,
-                                      color: textColor,
                                     ),
                                   ),
                                   SizedBox(height: h(4)),
@@ -169,7 +163,7 @@ class ChatsPage extends StatelessWidget {
                                     'Last message preview...',
                                     style: TextStyle(
                                       fontSize: font(14),
-                                      color: textColor.withOpacity(0.6),
+                                      color: Colors.grey[600],
                                     ),
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -180,7 +174,7 @@ class ChatsPage extends StatelessWidget {
                               '12:${i.toString().padLeft(2, '0')} PM',
                               style: TextStyle(
                                 fontSize: font(12),
-                                color: textColor.withOpacity(0.6),
+                                color: Colors.grey[600],
                               ),
                             ),
                           ],

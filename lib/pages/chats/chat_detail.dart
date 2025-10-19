@@ -4,12 +4,7 @@ class ChatDetailPage extends StatefulWidget {
   final String userName;
   final String userImage;
 
-  // 💡 إضافة 'const' للمُنشئ لتحسين الأداء
-  const ChatDetailPage({
-    super.key,
-    required this.userName,
-    required this.userImage,
-  });
+  const ChatDetailPage({required this.userName, required this.userImage});
 
   @override
   State<ChatDetailPage> createState() => _ChatDetailPageState();
@@ -21,20 +16,13 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    // 💡 الوصول إلى ColorScheme لسهولة استخدام الألوان
-    final colorScheme = Theme.of(context).colorScheme;
-    final textOnBackground = colorScheme.onBackground;
-
     return Scaffold(
-      // 💡 سيأخذ لون الخلفية من Theme.of(context).colorScheme.background
+      // أهم شي هنا
       resizeToAvoidBottomInset: true,
 
       appBar: AppBar(
-        // 💡 سيستخدم ألوان AppBar المعرفة في main.dart (Primary و onPrimary)
-        automaticallyImplyLeading: true,
-        titleSpacing: 0,
-        toolbarHeight: 100,
-
+        automaticallyImplyLeading: true, // يعرض سهم الرجوع تلقائياً
+        titleSpacing: 0, // يلصق العناصر ببعض
         title: Row(
           children: [
             // صورة المستخدم
@@ -50,17 +38,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             // اسم المستخدم
             Text(
               widget.userName,
-              // 💡 لون النص يتغير مع الثيم
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(
-                  context,
-                ).appBarTheme.foregroundColor, // لون النص في شريط التطبيق
-              ),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
         ),
+        toolbarHeight: 100,
       ),
 
       body: SafeArea(
@@ -72,14 +54,6 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                 padding: const EdgeInsets.all(16),
                 itemCount: _messages.length,
                 itemBuilder: (context, index) {
-                  // لنفترض أن جميع الرسائل هي رسائل واردة (للتوضيح)
-                  // يمكنك إضافة منطق isMe/isOther لتحديد الاتجاه واللون
-
-                  // 💡 تعريف لون فقاعة الرسالة ولون النص داخلها
-                  final messageColor = colorScheme.primary; // لون الفقاعة
-                  final messageTextColor = colorScheme
-                      .onPrimary; // لون النص داخل الفقاعة (يجب أن يكون أبيض عادةً)
-
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -102,8 +76,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                             vertical: 10,
                           ),
                           decoration: BoxDecoration(
-                            // 💡 استخدام لون الثيم الأساسي (primary) للفقاعة
-                            color: messageColor,
+                            color: Color(0xffEC8179),
                             borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(18),
                               topRight: Radius.circular(18),
@@ -112,8 +85,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                           ),
                           child: Text(
                             _messages[index],
-                            // 💡 لون النص داخل الفقاعة
-                            style: TextStyle(color: messageTextColor),
+                            style: TextStyle(color: Color(0xffFBF3F2)),
                           ),
                         ),
                       ),
@@ -131,37 +103,21 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   Expanded(
                     child: TextField(
                       controller: _controller,
-                      style: TextStyle(
-                        color: textOnBackground,
-                      ), // لون النص المُدخل
                       decoration: InputDecoration(
                         hintText: 'Type your message',
-                        hintStyle: TextStyle(
-                          color: textOnBackground.withOpacity(0.5),
-                        ), // لون النص المساعد
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 14,
                           horizontal: 10,
                         ),
                         filled: true,
-                        // 💡 لون خلفية خانة الإدخال يتوافق مع الثيم (لون surface أو background)
-                        fillColor: colorScheme.surface,
-
-                        // 💡 إزالة الحدود الثابتة واستبدالها بالثيم
+                        fillColor: Colors.white,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(27.5),
-                          borderSide: BorderSide(color: colorScheme.surface),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(27.5),
-                          borderSide: BorderSide(color: colorScheme.surface),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(27.5),
-                          borderSide: BorderSide(
-                            color: colorScheme.primary,
-                            width: 2,
-                          ), // التركيز بلون الثيم الأساسي
+                          borderSide: const BorderSide(color: Colors.white),
                         ),
                       ),
                       onSubmitted: (_) => _sendMessage(),
@@ -169,8 +125,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   ),
                   const SizedBox(width: 8),
                   IconButton(
-                    // 💡 لون زر الإرسال بلون الثيم الأساسي
-                    icon: Icon(Icons.send, color: colorScheme.primary),
+                    icon: const Icon(Icons.send, color: Color(0xffD44035)),
                     onPressed: _sendMessage,
                   ),
                 ],

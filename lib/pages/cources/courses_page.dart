@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 import 'Lessons.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -81,19 +82,19 @@ class _My_CoursesState extends State<CoursesPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundLight,
 
         // leading:
         title: const Text(
           'My Courses',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: AppColors.textLight,
             fontSize: 24,
           ),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundLight,
       body: Column(
         children: [
           // العنوان العلوي
@@ -122,20 +123,20 @@ class _My_CoursesState extends State<CoursesPage> {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: AppColors.backgroundLight,
                           ),
                         ),
                         const SizedBox(height: 20),
                         const Text(
                           "Completed Courses",
-                          style: TextStyle(fontSize: 13, color: Colors.white),
+                          style: TextStyle(fontSize: 13, color: AppColors.backgroundLight),
                         ),
                         const SizedBox(height: 20),
                         SizedBox(
                           width: 180,
                           child: LinearProgressIndicator(
                             value: 0.7,
-                            backgroundColor: Colors.white,
+                            backgroundColor: AppColors.backgroundLight,
                             valueColor: const AlwaysStoppedAnimation<Color>(
                               Colors.redAccent,
                             ),
@@ -211,7 +212,7 @@ class _My_CoursesState extends State<CoursesPage> {
                   child: Text(
                     'All',
                     style: TextStyle(
-                      color: selectedTab == 'All' ? Colors.white : Colors.black,
+                      color: selectedTab == 'All' ? AppColors.backgroundLight : AppColors.textLight,
                       fontSize: 14,
                     ),
                   ),
@@ -246,8 +247,8 @@ class _My_CoursesState extends State<CoursesPage> {
                     'Completed',
                     style: TextStyle(
                       color: selectedTab == 'Completed'
-                          ? Colors.white
-                          : Colors.black,
+                          ? AppColors.backgroundLight
+                          : AppColors.textLight,
                       fontSize: 14,
                     ),
                   ),
@@ -334,7 +335,7 @@ class _My_CoursesState extends State<CoursesPage> {
           width: 191,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.black),
+            border: Border.all(color: AppColors.textLight),
             gradient: const LinearGradient(
               colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
             ),
@@ -379,7 +380,7 @@ class _My_CoursesState extends State<CoursesPage> {
                       width: 100,
                       child: LinearProgressIndicator(
                         value: 0.99,
-                        backgroundColor: Colors.white,
+                        backgroundColor: AppColors.backgroundLight,
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
                         minHeight: 8,
                         borderRadius: BorderRadius.circular(10),
