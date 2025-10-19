@@ -3,31 +3,58 @@ import 'courses_page.dart';
 import 'Payment.dart';
 
 class About extends StatelessWidget {
+  const About({super.key}); // 💡 أضف const و super.key
+
   @override
   Widget build(BuildContext context) {
+    
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    
+    final primaryGradient = isDark
+        ? const [Color(0xFF861B13), Color(0xFFCA352B)] 
+        : const [
+            Color(0xFFE53A0F),
+            Color(0xFFDB5945),
+          ]; 
+
+    
+    final cardBackgroundColor = isDark ? colorScheme.surface : Colors.white;
+
     return Scaffold(
+      
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.white,
-        leading: MaterialButton(
-          onPressed: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CoursesPage()),
-            );
-          },
-          child: const Icon(
+        // 💡 استخدام ألوان الثيم (AppBarTheme المعرفة في main.dart)
+        backgroundColor: colorScheme.background,
+        foregroundColor: colorScheme.onBackground, // لون الأيقونات والنصوص
+        elevation: 0,
+
+        leading: IconButton(
+          // 💡 استبدال MaterialButton بـ IconButton
+          icon: Icon(
             Icons.chevron_left,
-            size: 60,
+            size: 30,
+            color: colorScheme.onBackground,
           ),
-        ),        title: const Text(
+          onPressed: () {
+            // استخدام pop إذا كان الانتقال للوراء
+            Navigator.pop(context);
+            // أو استخدم push كما كنت تفعل:
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesPage()));
+          },
+        ),
+        title: Text(
           'About Courses',
           style: TextStyle(
             fontWeight: FontWeight.bold,
+            fontSize: 22,
+            color: colorScheme.onBackground, // 💡 لون النص يتغير
           ),
         ),
       ),
-      backgroundColor: Colors.white,
+
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -35,280 +62,263 @@ class About extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 5),
-
-                    Container(
-                      height: 250,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFE53A0F), Color(0xFFDB5945)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    // 💡 لون خلفية الحاوية يتغير
+                    color: cardBackgroundColor,
+                    boxShadow: [
+                      // 💡 تعديل ظل الصندوق ليتوافق مع الثيم الداكن
+                      BoxShadow(
+                        color: isDark
+                            ? Colors.black.withOpacity(0.5)
+                            : Colors.grey.withOpacity(0.5),
+                        blurRadius: 10,
+                        spreadRadius: 1,
+                        offset: const Offset(4, 4),
                       ),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: const [
-                          Icon(Icons.play_circle_fill,
-                              size: 60, color: Colors.white70),
-                          Text(
-                            "How to get started",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 35,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 312,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          gradient: LinearGradient(
+                            // 💡 استخدام التدرج الديناميكي
+                            colors: primaryGradient,
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    // ======= شريط الإحصائيات =======
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                gradient: const LinearGradient(
-                                  colors: [Color(0xFFE53A0F), Color(0xFFDB5945)],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                              ),
+                            Icon(
+                              Icons.play_circle_fill,
+                              size: 60,
+                              color: Colors.white70,
+                            ),
+                            Positioned(
+                              // 💡 لضمان أن يكون النص في مكانه الصحيح
+                              bottom: 20,
                               child: const Text(
-                                "BEST SELLING",
+                                "How to get started",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15,
+                                  fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                            Row(
-                              children: const [
-                                Icon(Icons.people,
-                                    size: 30, color: Colors.black),
-                                SizedBox(width: 4),
-                                Text(
-                                  "23.5K",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(width: 16),
-                                Icon(Icons.star, size: 30, color: Colors.black),
-                                SizedBox(width: 4),
-                                Text(
-                                  "4.9",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+
+                      const SizedBox(height: 10),
+
+                      // ======= شريط الإحصائيات =======
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              // ** BEST SELLING **
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 10,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  gradient: LinearGradient(
+                                  
+                                    colors: primaryGradient,
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                ),
+                                child: const Text(
+                                  "BEST SELLING",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+
+                              // ** إحصائيات الطلاب والتقييمات **
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.people,
+                                    size: 14,
+                                    color: colorScheme.onBackground,
+                                  ), // 💡 أيقونة ديناميكية
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    "23.5K",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: colorScheme
+                                          .onBackground, // 💡 نص ديناميكي
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Icon(
+                                    Icons.star,
+                                    size: 14,
+                                    color: colorScheme.primary,
+                                  ), // 💡 أيقونة ديناميكية بلون أساسي
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    "4.9",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: colorScheme
+                                          .onBackground, // 💡 نص ديناميكي
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
 
               const SizedBox(height: 2),
 
+              // ** وصف الدورة **
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       "UX UI Design",
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        color: colorScheme.onBackground, // 💡 نص ديناميكي
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       "Master the fundamentals of UI/UX design, including wireframing, prototyping, and user research, to build intuitive, engaging digital products that prioritize usability, accessibility, and user satisfaction.",
-                      style: TextStyle(fontSize: 18, color: Colors.black87),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: colorScheme.onBackground.withOpacity(0.7),
+                      ), // 💡 نص ثانوي ديناميكي
                     ),
                   ],
                 ),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 60),
 
-
+              // ** معلومات الدروس والـ BUY NOW **
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // رمز التشغيل وعدد الدروس (تم تبسيط هذا الجزء قليلاً ليكون أسهل للقراءة)
                   Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Stack(
-                      alignment: Alignment.center,
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Row(
                       children: [
                         Container(
                           width: 60,
                           height: 60,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
-                              colors: [Color(0xFFE53A0F), Color(0xFFDB5945)],
+                              // 💡 التدرج الديناميكي
+                              colors: primaryGradient,
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
                           ),
+                          child: const Icon(
+                            Icons.play_arrow_outlined,
+                            color: Colors.white,
+                            size: 28,
+                          ),
                         ),
-
-                          Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.transparent,
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 3,
+                        const SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "63 Lesson",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color:
+                                    colorScheme.onBackground, // 💡 نص ديناميكي
+                              ),
                             ),
-                          ),
-                        ),
-                        const Icon(
-                          Icons.play_arrow_outlined,
-                          color: Colors.white,
-                          size: 28,
+                            const SizedBox(height: 4),
+                            Text(
+                              "64 Videos • 30 Sheets • 80 Quiz",
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: colorScheme.onBackground.withOpacity(
+                                  0.6,
+                                ), // 💡 نص ثانوي ديناميكي
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 15),
+
+                  const Spacer(),
+
+                  // ** السعر وزر الشراء **
                   Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:  [
-                        Text(
-                          "63 Lesson",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            colorScheme.primary, // 💡 استخدام اللون الأساسي
+                        foregroundColor: colorScheme.onPrimary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        SizedBox(height: 4),
-                        Text(
-                          "64 Videos   •   30 Sheets   •   80 Quiz",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black54,
-                          ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 12,
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              SizedBox(height: 15),
-
-              Stack(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.all(15),
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      image: const DecorationImage(
-                        image: AssetImage("assets/images/Untitled-1.png"),
-                        fit: BoxFit.cover,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Payment()),
+                        );
+                      },
+                      child: const Text(
+                        "BUY NOW \$120", // 💡 جمعنا السعر مع الزر لتصحيح التصميم
+                        style: TextStyle(fontSize: 14),
                       ),
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const SizedBox(width: 50), // مسافة 100 بكسل
-                        const Text(
-                          "Course Price\n\$120",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const Spacer(),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white.withOpacity(0.3),
-                            foregroundColor: Colors.redAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Payment()),
-                            );
-                          },
-                          child: const Text(
-                            "BUY NOW",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // الدائرة فوق المنحنى
-                  Positioned(
-                    top: 10,
-                    left: 5,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: [Color(0xFFE53A0F), Color(0xFFDB5945)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.transparent,
-
-                          ),
-                        ),
-                        const Icon(Icons.chat,
-                            color: Colors.white, size: 28),
-                      ],
-                    ),
                   ),
                 ],
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),
