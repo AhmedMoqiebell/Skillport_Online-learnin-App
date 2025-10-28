@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/pages/payment/my_account_fl.dart';
+import 'package:our_flutter_project/pages/profile/negative.dart';
+import 'package:our_flutter_project/pages/profile/notifications.dart';
 import 'edit_profile_page.dart';
 import '../../main.dart'; // 👈 للوصول إلى MyApp.of(context)
 
@@ -104,17 +107,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     // 💡 لا نحتاج لـ setState هنا لأن تغيير الثيم سيقوم بإعادة بناء (rebuild) كل الـ Widgets تلقائياً
                   },
                 ),
-                const _OptionTile(
+                _OptionTile(
                   icon: Icons.payment,
                   title: 'Payment Details',
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MyAccountFl())),
+                  
                 ),
-                const _OptionTile(
+                _OptionTile(
                   icon: Icons.notifications,
                   title: 'Notifications',
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage())),
                 ),
-                const _OptionTile(
+                _OptionTile(
                   icon: Icons.star_border,
                   title: 'Rate & Review',
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NegativeReviewsPage())),
                 ),
                 const _OptionTile(icon: Icons.help_outline, title: 'Help'),
                 const SizedBox(height: 40),
@@ -215,6 +222,7 @@ class _OptionTile extends StatelessWidget {
   final bool hasSwitch;
   final bool? switchValue;
   final Function(bool)? onSwitchChanged;
+  final Function()? onTap;
 
   const _OptionTile({
     required this.icon,
@@ -222,6 +230,7 @@ class _OptionTile extends StatelessWidget {
     this.hasSwitch = false,
     this.switchValue,
     this.onSwitchChanged,
+    this.onTap,
   });
 
   @override
@@ -247,7 +256,7 @@ class _OptionTile extends StatelessWidget {
               onChanged: onSwitchChanged,
             )
           : Icon(Icons.arrow_forward_ios, size: 16, color: iconColor),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }
