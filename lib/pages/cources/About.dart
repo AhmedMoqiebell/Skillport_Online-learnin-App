@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 import 'courses_page.dart';
 import 'Payment.dart';
 
@@ -7,23 +8,16 @@ class About extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    
     final primaryGradient = isDark
-        ? const [Color(0xFF861B13), Color(0xFFCA352B)] 
-        : const [
-            Color(0xFFE53A0F),
-            Color(0xFFDB5945),
-          ]; 
+        ? const [Color(0xFF861B13), Color(0xFFCA352B)]
+        : const [Color(0xFFE53A0F), Color(0xFFDB5945)];
 
-    
-    final cardBackgroundColor = isDark ? colorScheme.surface : Colors.white;
+    final cardBackgroundColor = isDark ? colorScheme.surface : AppColors.backgroundLight;
 
     return Scaffold(
-      
       appBar: AppBar(
         centerTitle: true,
         // 💡 استخدام ألوان الثيم (AppBarTheme المعرفة في main.dart)
@@ -36,7 +30,7 @@ class About extends StatelessWidget {
           icon: Icon(
             Icons.chevron_left,
             size: 30,
-            color: colorScheme.onBackground,
+            color:AppColors.textLight,
           ),
           onPressed: () {
             // استخدام pop إذا كان الانتقال للوراء
@@ -50,7 +44,7 @@ class About extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
-            color: colorScheme.onBackground, // 💡 لون النص يتغير
+            color: AppColors.textLight, // 💡 لون النص يتغير
           ),
         ),
       ),
@@ -102,7 +96,7 @@ class About extends StatelessWidget {
                             Icon(
                               Icons.play_circle_fill,
                               size: 60,
-                              color: Colors.white70,
+                              color: AppColors.backgroundLight,
                             ),
                             Positioned(
                               // 💡 لضمان أن يكون النص في مكانه الصحيح
@@ -110,7 +104,7 @@ class About extends StatelessWidget {
                               child: const Text(
                                 "How to get started",
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: AppColors.backgroundLight,
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -138,7 +132,6 @@ class About extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
                                   gradient: LinearGradient(
-                                  
                                     colors: primaryGradient,
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
@@ -147,7 +140,7 @@ class About extends StatelessWidget {
                                 child: const Text(
                                   "BEST SELLING",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: AppColors.backgroundLight,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -176,7 +169,7 @@ class About extends StatelessWidget {
                                   Icon(
                                     Icons.star,
                                     size: 14,
-                                    color: colorScheme.primary,
+                                    color: AppColors.primaryLight,
                                   ), // 💡 أيقونة ديناميكية بلون أساسي
                                   const SizedBox(width: 4),
                                   Text(
@@ -253,7 +246,7 @@ class About extends StatelessWidget {
                           ),
                           child: const Icon(
                             Icons.play_arrow_outlined,
-                            color: Colors.white,
+                            color: AppColors.backgroundLight,
                             size: 28,
                           ),
                         ),
@@ -294,8 +287,8 @@ class About extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            colorScheme.primary, // 💡 استخدام اللون الأساسي
-                        foregroundColor: colorScheme.onPrimary,
+                            AppColors.primaryLight, // 💡 استخدام اللون الأساسي
+                        foregroundColor: AppColors.secondaryLight,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

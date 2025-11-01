@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
-    final colorScheme = Theme.of(context).colorScheme;
-    final textOnBackground = colorScheme.onBackground;
-
     return Scaffold(
-
+      backgroundColor: const Color(0xFFFBF3F2),
       appBar: AppBar(
-        backgroundColor: colorScheme.background, 
+        backgroundColor: Colors.transparent,
         elevation: 0,
-
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: textOnBackground,
-          ), // لون الأيقونة يتغير مع الثيم
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Edit Profile',
           style: TextStyle(
-            // 💡 
-            color: textOnBackground,
+            color: Colors.black,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -39,26 +30,20 @@ class EditProfilePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            
+            // صورة البروفايل
             CircleAvatar(
               radius: 50,
               backgroundImage: const AssetImage('assets/images/profile.png'),
-              // 💡 يجب أن تكون الخلفية متوافقة مع الثيم الفاتح/الداكن
-              backgroundColor: colorScheme.surface,
+              backgroundColor: AppColors.backgroundLight,
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               'Ahmed',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: textOnBackground, // 💡 لون النص الأساسي
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Text(
+            const Text(
               'amoqiebel736@gmail.com',
-              // 💡 لون نص ثانوي (لون نص الخلفية مع شفافية)
-              style: TextStyle(color: textOnBackground.withOpacity(0.6)),
+              style: TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 30),
 
@@ -78,9 +63,7 @@ class EditProfilePage extends StatelessWidget {
             // زر تسجيل الخروج
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                // 💡 اللون الأحمر الثابت (للتنبيه/الخروج)
-                backgroundColor: const Color(0xFFD44035),
-                foregroundColor: Colors.white, // النص يبقى أبيض
+                backgroundColor:  AppColors.primaryLight,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 50,
                   vertical: 12,
@@ -92,7 +75,10 @@ class EditProfilePage extends StatelessWidget {
               onPressed: () {
                 // ضع كود تسجيل الخروج هنا
               },
-              child: const Text('Log out', style: TextStyle(fontSize: 16)),
+              child: const Text(
+                'Log out',
+                style: TextStyle(fontSize: 16, color: AppColors.backgroundLight),
+              ),
             ),
           ],
         ),
@@ -105,36 +91,23 @@ class EditProfilePage extends StatelessWidget {
 class _EditOption extends StatelessWidget {
   final IconData icon;
   final String title;
-
-  // 💡 يجب أن يكون المنشئ ثابتاً (Const) لتجنب الأخطاء
-  const _EditOption({super.key, required this.icon, required this.title});
+  const _EditOption({required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    // 💡 استخدام اللون الأساسي (Primary) لـ Theme.of(context)
-    final primaryColor = Theme.of(context).colorScheme.primary;
-    final textOnBackground = Theme.of(context).colorScheme.onBackground;
-
     return ListTile(
-      leading: Icon(
-        icon,
-        color: primaryColor,
-      ), // 💡 الأيقونة بلون الثيم الأساسي
+      leading: Icon(icon, color: AppColors.primaryLight),
       title: Text(
         title,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: textOnBackground, // 💡 النص بلون متوافق مع الثيم
-        ),
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
       ),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.arrow_forward_ios,
         size: 16,
-        color: primaryColor,
-      ), // 💡 الأيقونة بلون الثيم الأساسي
+        color: AppColors.primaryLight,
+      ),
       onTap: () {
-        // اضف التنقل لصفحات التعديل الخاصة بكل خيار
+        
       },
     );
   }
