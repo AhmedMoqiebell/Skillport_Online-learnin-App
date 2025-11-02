@@ -10,17 +10,10 @@ class Lessons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         centerTitle: true,
         backgroundColor: Colors.white,
-        leading: MaterialButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CoursesPage()),
-            );
-          },
-          child: const Icon(Icons.chevron_left, size: 60),
-        ),
+
         title: const Text(
           'Lessons',
           style: TextStyle(fontWeight: FontWeight.bold),
