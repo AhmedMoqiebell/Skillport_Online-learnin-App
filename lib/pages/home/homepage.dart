@@ -3,6 +3,8 @@
 // import 'sginin.dart';
 
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
+import 'package:our_flutter_project/pages/payment/my_account_fl.dart';
 
 class HomePage extends StatefulWidget {
   final String username;
@@ -14,15 +16,114 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFCEFEF), // لون الخلفية
-
-    appBar: AppBar(
+      key: _scaffoldKey,
+      backgroundColor: AppColors.backgroundLight, // لون الخلفية
+      // Right-side drawer
+      endDrawer: Drawer(
       
-    ),
-
+        backgroundColor: AppColors.backgroundLight,
+        
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(20),
+                color: AppColors.secondaryLight,
+                child: Row(
+                  children: [
+                    const CircleAvatar(
+                      radius: 28,
+                      backgroundImage: AssetImage('assets/images/profile.png'),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.username.isNotEmpty
+                                ? widget.username
+                                : 'Guest',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            widget.username.isNotEmpty
+                                ? 'user@example.com'
+                                : 'Please sign in',
+                            style: const TextStyle(color: Colors.white70),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: const Text('Profile'),
+                onTap: () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Profile tapped')),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.notifications),
+                title: const Text('Notifications'),
+                onTap: () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Notifications tapped')),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.account_balance_wallet),
+                title: const Text('Payment Dashboard'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const MyAccountFl()),
+                  );
+                },
+              ),
+              const Spacer(),
+              ListTile(
+                leading: Icon(
+                  widget.username.isNotEmpty ? Icons.logout : Icons.login,
+                ),
+                title: Text(
+                  widget.username.isNotEmpty ? 'Sign Out' : 'Sign In',
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        widget.username.isNotEmpty
+                            ? 'Signed out'
+                            : 'Sign in tapped',
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -33,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFFFF6B6B), Color(0xFFFF8E8E)],
+                    colors: [AppColors.primaryLight, AppColors.secondaryLight],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -55,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               "Hey ${widget.username},",
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: AppColors.backgroundLight,
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -64,23 +165,20 @@ class _HomePageState extends State<HomePage> {
                             const Text(
                               "Let’s Start Learning",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppColors.backgroundLight,
                                 fontSize: 16,
                               ),
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            const Icon(Icons.notifications_none,
-                                color: Colors.white, size: 28),
-                            const SizedBox(width: 15),
-                            const CircleAvatar(
-                              radius: 22,
-                              backgroundImage:
-                                  AssetImage("assets/images/profile.png"), // مؤقتة
-                            ),
-                          ],
+                        // Menu button to open right-side drawer
+                        IconButton(
+                          icon: const Icon(
+                            Icons.menu,
+                            color: AppColors.backgroundLight,
+                            size: 28,
+                          ),
+                          onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
                         ),
                       ],
                     ),
@@ -89,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.backgroundLight,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: const TextField(
@@ -114,12 +212,14 @@ class _HomePageState extends State<HomePage> {
                   children: const [
                     Text(
                       "Ongoing Course",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       "View All",
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: AppColors.primaryLight),
                     ),
                   ],
                 ),
@@ -138,60 +238,81 @@ class _HomePageState extends State<HomePage> {
                       width: 280,
                       margin: const EdgeInsets.only(right: 15),
                       padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.shade200,
-                            blurRadius: 6,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.primaryLight,
+                            AppColors.secondaryLight,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
                       ),
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // صورة الكورس يسار
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(
-                              'assets/images/english.jpg',
-                              width: 70,
-                              height: 70,
-                              fit: BoxFit.cover,
-                            ),
+                          // top row: image + texts
+                          Row(
+                            children: [
+                              // صورة الكورس يسار
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.asset(
+                                  'assets/images/english.jpg',
+                                  width: 70,
+                                  height: 70,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              // النصوص يمين
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Foundation of Google UX UI design",
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.backgroundLight,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    const Text(
+                                      "64 Videos · 30 Shift · 80 Quiz",
+                                      style: TextStyle(
+                                        color: AppColors.backgroundLight,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 12),
-                          // النصوص يمين
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Foundation of Google UX UI design",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 6),
-                                const Text(
-                                  "64 Videos · 30 Shift · 80 Quiz",
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 12),
-                                ),
-                                const SizedBox(height: 6),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: LinearProgressIndicator(
-                                    value: 43 / 64,
-                                    color: Color(0xFFFF6B6B),
-                                    backgroundColor: Colors.grey.shade300,
-                                    minHeight: 6,
-                                  ),
-                                ),
-                              ],
+                          const Spacer(),
+                          // progress bar at bottom spanning the card
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 6,
+                              child: LinearProgressIndicator(
+                                value: 43 / 64,
+                                color: AppColors.secondaryLight,
+                                backgroundColor: Colors.grey.shade300,
+                                minHeight: 8,
+                              ),
                             ),
                           ),
                         ],
@@ -211,13 +332,12 @@ class _HomePageState extends State<HomePage> {
                   children: const [
                     Text(
                       "Choose Your Course",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    Text(
-                      "View All",
-                      style: TextStyle(color: Colors.red),
-                    ),
+                    Text("View All", style: TextStyle(color: AppColors.primaryLight)),
                   ],
                 ),
               ),
@@ -267,15 +387,16 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             "UI UX Design",
                             style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
                             "64 Videos · 80 Quiz",
-                            style: TextStyle(
-                                fontSize: 12, color: Colors.grey),
+                            style: TextStyle(fontSize: 12, color: Colors.grey),
                           ),
                         ),
                         const Spacer(),
@@ -301,30 +422,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-
-      // شريط التنقل السفلي
-      // bottomNavigationBar: BottomNavigationBar(
-      //   selectedItemColor: const Color(0xFFFF6B6B),
-      //   unselectedItemColor: Colors.grey,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: "Home",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.book),
-      //       label: "Courses",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.chat),
-      //       label: "Chats",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: "Profile",
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
