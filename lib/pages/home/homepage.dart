@@ -1,7 +1,3 @@
-//import 'dart:async';
-// import 'package:flutter/material.dart';
-// import 'sginin.dart';
-
 import 'package:flutter/material.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
 import 'package:our_flutter_project/pages/payment/my_account_fl.dart';
@@ -24,9 +20,8 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: AppColors.backgroundLight, // لون الخلفية
       // Right-side drawer
       endDrawer: Drawer(
-      
         backgroundColor: AppColors.backgroundLight,
-        
+
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -178,7 +173,8 @@ class _HomePageState extends State<HomePage> {
                             color: AppColors.backgroundLight,
                             size: 28,
                           ),
-                          onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
+                          onPressed: () =>
+                              _scaffoldKey.currentState?.openEndDrawer(),
                         ),
                       ],
                     ),
@@ -337,7 +333,10 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text("View All", style: TextStyle(color: AppColors.primaryLight)),
+                    Text(
+                      "View All",
+                      style: TextStyle(color: AppColors.primaryLight),
+                    ),
                   ],
                 ),
               ),

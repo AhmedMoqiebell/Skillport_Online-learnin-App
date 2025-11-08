@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/main.dart';
 import 'package:our_flutter_project/pages/home/homepage.dart';
 import 'sginin.dart';
 
@@ -219,8 +220,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (_) =>
-                                    const HomePage(username: "Ahmed"),
-                              ), // ✅ يفتح صفحة Sign in
+                                    const MyApp(),
+                              ),
                             );
                           }
                         },
@@ -256,12 +257,18 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                          icon: Image.asset('assets/google.png', height: 40),
+                          icon: Image.asset(
+                            'assets/images/google.png',
+                            height: 40,
+                          ),
                           onPressed: () {},
                         ),
                         const SizedBox(width: 20),
                         IconButton(
-                          icon: Image.asset('assets/apple.png', height: 40),
+                          icon: Image.asset(
+                            'assets/images/apple.png',
+                            height: 40,
+                          ),
                           onPressed: () {},
                         ),
                       ],
