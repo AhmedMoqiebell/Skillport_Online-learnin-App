@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/main.dart';
 import 'package:our_flutter_project/pages/home/homepage.dart';
 import 'createaccount.dart';
 
@@ -202,12 +203,10 @@ class _SigninState extends State<Signin> {
                           debugPrint('Button pressed');
                           if (_formKey.currentState!.validate()) {
                             debugPrint('Creating account with:');
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    const HomePage(username: "Ahmed"),
-                              ), // ✅ يفتح صفحة Sign in
+                              MaterialPageRoute(builder: (_) => const MyApp()),
+                              (Route<dynamic> route) => false,
                             );
                           }
                         },
@@ -242,12 +241,18 @@ class _SigninState extends State<Signin> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                          icon: Image.asset('assets/google.png', height: 40),
+                          icon: Image.asset(
+                            'assets/images/google.png',
+                            height: 40,
+                          ),
                           onPressed: () {},
                         ),
                         const SizedBox(width: 20),
                         IconButton(
-                          icon: Image.asset('assets/apple.png', height: 40),
+                          icon: Image.asset(
+                            'assets/images/apple.png',
+                            height: 40,
+                          ),
 
                           onPressed: () {},
                         ),

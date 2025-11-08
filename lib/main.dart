@@ -8,10 +8,9 @@ import 'pages/cources/courses_page.dart';
 import 'pages/chats/profile.dart';
 import 'pages/home/homepage.dart';
 
-void main() => runApp(const MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: SplashScreen(),
-));
+void main() => runApp(
+  const MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen()),
+);
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -33,6 +32,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        primaryColor: AppColors.primaryLight,
+        scaffoldBackgroundColor: AppColors.backgroundLight,
+        textTheme: ThemeData.light().textTheme.apply(fontFamily: 'Poppins'),
+      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: _pages[_currentIndex],
@@ -46,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           items: [
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/images/icons/home-2.svg',
+                'assets/icons/home-2.svg',
                 width: 24,
                 height: 24,
               ),
@@ -54,7 +59,7 @@ class _MyAppState extends State<MyApp> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/images/icons/play.svg',
+                'assets/icons/play.svg',
                 width: 24,
                 height: 24,
               ),
@@ -62,7 +67,7 @@ class _MyAppState extends State<MyApp> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/images/icons/message-text.svg',
+                'assets/icons/message-text.svg',
                 width: 24,
                 height: 24,
               ),
@@ -70,7 +75,7 @@ class _MyAppState extends State<MyApp> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/images/icons/frame.svg',
+                'assets/icons/frame.svg',
                 width: 24,
                 height: 24,
               ),
@@ -89,6 +94,7 @@ class SplashScreen extends StatefulWidget {
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
@@ -98,9 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (_) => const onbording(),
-        ), 
+        MaterialPageRoute(builder: (_) => const onbording()),
       );
     });
   }
@@ -115,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             // صورة اللوجو
             Image.asset(
-              "assets/images/logo.png", // ضع صورة اللوجو هنا
+              "assets/images/google.png", // ضع صورة اللوجو هنا
               width: 140,
               height: 140,
             ),
