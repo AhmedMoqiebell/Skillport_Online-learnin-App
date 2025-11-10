@@ -138,7 +138,7 @@ class _My_CoursesState extends State<CoursesPage> {
                             value: 0.7,
                             backgroundColor: AppColors.backgroundLight,
                             valueColor: const AlwaysStoppedAnimation<Color>(
-                              Colors.redAccent,
+                              AppColors.primaryLight,
                             ),
                             minHeight: 8,
                             borderRadius: BorderRadius.circular(10),
@@ -195,6 +195,7 @@ class _My_CoursesState extends State<CoursesPage> {
                 child: Container(
                   alignment: Alignment.center,
                   width: 80,
+                  height: 35,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     gradient: selectedTab == 'All'
@@ -229,6 +230,7 @@ class _My_CoursesState extends State<CoursesPage> {
                 child: Container(
                   alignment: Alignment.center,
                   width: 120,
+                  height: 35,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     gradient: selectedTab == 'Completed'
@@ -426,7 +428,7 @@ class _My_CoursesState extends State<CoursesPage> {
           errorBuilder: (context, error, stackTrace) {
             print('Error loading image: $imagePath');
             return Container(
-              color: Colors.grey,
+              color: AppColors.textLight.withOpacity(0.5),
               child: const Icon(Icons.error),
             );
           },

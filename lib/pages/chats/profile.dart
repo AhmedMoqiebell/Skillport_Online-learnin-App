@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
 import 'package:our_flutter_project/pages/payment/my_account_fl.dart';
 import 'package:our_flutter_project/pages/profile/negative.dart';
 import 'package:our_flutter_project/pages/profile/notifications.dart';
+
 import 'edit_profile_page.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -53,7 +55,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.edit, size: 18),
+                  icon: const Icon(Iconsax.edit),
                   label: const Text('edit profile'),
                 ),
                 const SizedBox(height: 20),
@@ -64,9 +66,9 @@ class ProfilePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
-                      _StatBox(icon: Icons.menu_book, label: '15 Courses'),
-                      _StatBox(icon: Icons.star, label: '4.9 Reviews'),
-                      _StatBox(icon: Icons.access_time, label: '21 Hours'),
+                      _StatBox(icon: Iconsax.book, label: '15 Courses'),
+                      _StatBox(icon: Iconsax.star1, label: '4.9 Reviews'),
+                      _StatBox(icon: Iconsax.clock, label: '21 Hours'),
                     ],
                   ),
                 ),
@@ -75,27 +77,27 @@ class ProfilePage extends StatelessWidget {
 
                 // ===== خيارات القائمة =====
                 const _OptionTile(
-                  icon: Icons.dark_mode,
+                  icon: Iconsax.moon,
                   title: 'Dark Mode',
                   hasSwitch: true,
                 ),
                 _OptionTile(
-                  icon: Icons.payment,
+                  icon: Iconsax.wallet,
                   title: 'Payment Details',
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MyAccountFl())),
                   
                 ),
                 _OptionTile(
-                  icon: Icons.notifications,
+                  icon: Iconsax.notification,
                   title: 'Notifications',
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage())),
                 ),
                 _OptionTile(
-                  icon: Icons.star_border,
+                  icon: Iconsax.star,
                   title: 'Rate & Review',
                   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NegativeReviewsPage())),
                 ),
-                const _OptionTile(icon: Icons.help_outline, title: 'Help'),
+                const _OptionTile(icon: Iconsax.message_question, title: 'Help'),
                 const SizedBox(height: 40),
               ],
             ),
@@ -207,7 +209,7 @@ class _OptionTile extends StatelessWidget {
               onChanged: onSwitchChanged,
             )
           : const Icon(
-              Icons.arrow_forward_ios,
+              Iconsax.arrow_right_3,
               size: 16,
               color: AppColors.primaryLight,
             ),

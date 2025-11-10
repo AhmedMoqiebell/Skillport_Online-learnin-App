@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:our_flutter_project/main.dart';
-import 'package:our_flutter_project/pages/home/homepage.dart';
+import 'package:our_flutter_project/providers/auth_provider.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 import 'createaccount.dart';
-
-import 'onbording.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -16,49 +16,60 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   final _formKey = GlobalKey<FormState>();
   bool _rememberMe = false;
-  bool _obscurePassword = true;
   bool _obscure = true;
-  bool _loading = false;
+  bool _isLoading = false;
   // Controllers
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   // تخزين القيم (username, password)
-  List<String> credentials = ["", ""]; // [username, password]
+  List<String> credentials = ["", ""]; // [email, password]
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  bool get isFormValid =>
-      credentials[0].isNotEmpty && credentials[1].isNotEmpty;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            // الدائرة الكبيرة في الأعلى يسار
-            Positioned(
-              top: -100,
-              left: -100,
-              child: Container(
-                width: 220,
-                height: 210,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFE53935),
-                  shape: BoxShape.circle,
-                ),
-              ),
+        appBar: AppBar(
+          
+          actions: [
+            TextButton(
+              onPressed: _isLoading ? null : () async {
+                setState(() => _isLoading = true);
+                await Future.delayed(const Duration(seconds: 1));
+                if (mounted) {
+                  setState(() => _isLoading = false);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => const MyApp()),
+                    (Route<dynamic> route) => false,
+                  );
+                }
+              },
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Text(
+                      "Skip for Now",
+                      style: TextStyle(color: AppColors.primaryLight),
+                    ),
             ),
-
-            // باقي الصفحة
-            Form(
+          ],
+          backgroundColor: AppColors.backgroundLight,
+          elevation: 0,
+        ),
+        backgroundColor: AppColors.backgroundLight,
+        body: Form(
               key: _formKey,
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
@@ -69,10 +80,7 @@ class _SigninState extends State<Signin> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // زر الرجوع
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () => Navigator.pop(context),
-                    ),
+                    
                     const SizedBox(height: 20),
 
                     // العنوان
@@ -82,22 +90,27 @@ class _SigninState extends State<Signin> {
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
+                          fontFamily: "Poppins"
                         ),
                       ),
                     ),
                     const SizedBox(height: 10),
 
-                    const Center(
+                    Center(
                       child: Text(
-                        "Hi! Welcome back, you’ve been missed",
-                        style: TextStyle(fontSize: 15, color: Colors.black54),
+                        "Hi! Welcome back, you've been missed",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: AppColors.textLight.withOpacity(0.6),
+                          fontFamily: "Poppins"
+                        ),
                       ),
                     ),
                     const SizedBox(height: 30),
 
                     // حقل Username
                     TextFormField(
-                      controller: _usernameController,
+                      controller: _emailController,
                       onChanged: (val) {
                         setState(() {
                           credentials[0] = val.trim();
@@ -105,18 +118,18 @@ class _SigninState extends State<Signin> {
                       },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.person),
-                        labelText: 'User Name',
+                        prefixIcon: const Icon(Iconsax.user),
+                        labelText: 'Email',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
                         ),
                         filled: true,
-                        fillColor: Colors.grey.shade100,
+                        fillColor: const Color.fromARGB(12, 80, 80, 80),
                       ),
                       validator: (v) {
                         final val = v ?? '';
-                        if (val.isEmpty) return 'Please enter your UserName';
+                        if (val.isEmpty && !val.contains('@')) return 'Please enter your Email';
                         // if (val.length < 6) return 'Password must be at least 6 characters';
                         return null;
                       },
@@ -132,17 +145,17 @@ class _SigninState extends State<Signin> {
                       },
                       obscureText: _obscure,
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.lock),
+                        prefixIcon: const Icon(Iconsax.lock),
                         labelText: 'Password',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
                         ),
                         filled: true,
-                        fillColor: Colors.grey.shade100,
+                        fillColor: const Color.fromARGB(12, 80, 80, 80),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscure ? Icons.visibility_off : Icons.visibility,
+                            _obscure ? Iconsax.eye_slash : Iconsax.eye,
                           ),
                           onPressed: () => setState(() => _obscure = !_obscure),
                         ),
@@ -165,7 +178,7 @@ class _SigninState extends State<Signin> {
                           children: [
                             Checkbox(
                               value: _rememberMe,
-                              activeColor: const Color(0xFFE53935),
+                              activeColor: AppColors.primaryLight,
                               onChanged: (val) {
                                 setState(() {
                                   _rememberMe = val ?? false;
@@ -179,7 +192,7 @@ class _SigninState extends State<Signin> {
                           onPressed: () {},
                           child: const Text(
                             "Forgot password?",
-                            style: TextStyle(color: Colors.blue),
+                            style: TextStyle(color: AppColors.primaryLight),
                           ),
                         ),
                       ],
@@ -192,33 +205,46 @@ class _SigninState extends State<Signin> {
                       height: 55,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: isFormValid
-                              ? const Color(0xFFE53935)
-                              : Colors.grey,
+                          backgroundColor: AppColors.primaryLight,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: _isLoading ? null : () async {
                           debugPrint('Button pressed');
                           if (_formKey.currentState!.validate()) {
-                            debugPrint('Creating account with:');
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (_) => const MyApp()),
-                              (Route<dynamic> route) => false,
-                            );
+                            setState(() => _isLoading = true);
+                            await Future.delayed(const Duration(seconds: 1));
+                            if (mounted) {
+                              // Mark as logged in
+                              context.read<AuthProvider>().login();
+                              setState(() => _isLoading = false);
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (_) => const MyApp()),
+                                (Route<dynamic> route) => false,
+                              );
+                            }
                           }
                         },
-                        // : null, // معطل إذا الحقول فاضية
-                        child: const Text(
-                          "Sign In",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                              )
+                            : const Text(
+                                "Sign In",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontFamily: "Poppins"
+                                ),
+                              ),
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -277,7 +303,7 @@ class _SigninState extends State<Signin> {
                           child: const Text(
                             "Sign up",
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: AppColors.primaryLight,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -288,9 +314,6 @@ class _SigninState extends State<Signin> {
                 ),
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

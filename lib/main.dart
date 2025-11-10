@@ -1,16 +1,33 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:our_flutter_project/pages/chats/chats_page.dart';
 import 'package:our_flutter_project/pages/registration/onbording.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
+import 'package:our_flutter_project/providers/auth_provider.dart';
 import 'pages/cources/courses_page.dart';
 import 'pages/chats/profile.dart';
 import 'pages/home/homepage.dart';
 
 void main() => runApp(
-  const MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen()),
-);
+      ChangeNotifierProvider(
+        create: (_) => AuthProvider(),
+        child: const RootApp(),
+      ),
+    );
+
+class RootApp extends StatelessWidget {
+  const RootApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+    );
+  }
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

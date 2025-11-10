@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
+import 'package:iconsax/iconsax.dart';
 import 'courses_page.dart';
 import 'Payment.dart';
 
@@ -8,38 +9,29 @@ class About extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    final primaryGradient = isDark
-        ? const [Color(0xFF861B13), Color(0xFFCA352B)]
-        : const [Color(0xFFE53A0F), Color(0xFFDB5945)];
-
-    final cardBackgroundColor = isDark ? colorScheme.surface : AppColors.backgroundLight;
+    // استخدام ألوان المشروع من AppColors
+    final primaryGradient = const [AppColors.primaryLight, AppColors.secondaryLight];
+    const cardBackgroundColor = AppColors.backgroundLight;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        // 💡 استخدام ألوان الثيم (AppBarTheme المعرفة في main.dart)
-        backgroundColor: colorScheme.background,
-        foregroundColor: colorScheme.onBackground, // لون الأيقونات والنصوص
+        // ألوان من AppColors
+        backgroundColor: AppColors.backgroundLight,
+        foregroundColor: AppColors.textLight, // لون الأيقونات والنصوص
         elevation: 0,
 
         leading: IconButton(
-          // 💡 استبدال MaterialButton بـ IconButton
-          icon: Icon(
-            Icons.chevron_left,
-            size: 30,
-            color:AppColors.textLight,
-          ),
+          
+          icon: const Icon(Iconsax.arrow_left, size: 24, color: AppColors.textLight),
           onPressed: () {
-            // استخدام pop إذا كان الانتقال للوراء
+            
             Navigator.pop(context);
-            // أو استخدم push كما كنت تفعل:
-            // Navigator.push(context, MaterialPageRoute(builder: (context) => CoursesPage()));
+            
+            
           },
         ),
-        title: Text(
+        title: const Text(
           'About Courses',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -66,9 +58,7 @@ class About extends StatelessWidget {
                     boxShadow: [
                       // 💡 تعديل ظل الصندوق ليتوافق مع الثيم الداكن
                       BoxShadow(
-                        color: isDark
-                            ? Colors.black.withOpacity(0.5)
-                            : Colors.grey.withOpacity(0.5),
+                        color: AppColors.textLight.withOpacity(0.2),
                         blurRadius: 10,
                         spreadRadius: 1,
                         offset: const Offset(4, 4),
@@ -79,7 +69,7 @@ class About extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 312,
+                        height: 200,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
@@ -93,11 +83,7 @@ class About extends StatelessWidget {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            Icon(
-                              Icons.play_circle_fill,
-                              size: 60,
-                              color: AppColors.backgroundLight,
-                            ),
+                            const Icon(Iconsax.play_circle, size: 60, color: AppColors.backgroundLight),
                             Positioned(
                               // 💡 لضمان أن يكون النص في مكانه الصحيح
                               bottom: 20,
@@ -149,36 +135,27 @@ class About extends StatelessWidget {
 
                               // ** إحصائيات الطلاب والتقييمات **
                               Row(
+                                
                                 children: [
-                                  Icon(
-                                    Icons.people,
-                                    size: 14,
-                                    color: colorScheme.onBackground,
-                                  ), // 💡 أيقونة ديناميكية
+                                  const Icon(Iconsax.profile_2user, size: 16, color: AppColors.textLight),
                                   const SizedBox(width: 4),
                                   Text(
                                     "23.5K",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
-                                      color: colorScheme
-                                          .onBackground, // 💡 نص ديناميكي
+                                      color: AppColors.textLight, // 💡 نص ديناميكي
                                     ),
                                   ),
                                   const SizedBox(width: 16),
-                                  Icon(
-                                    Icons.star,
-                                    size: 14,
-                                    color: AppColors.primaryLight,
-                                  ), // 💡 أيقونة ديناميكية بلون أساسي
+                                  const Icon(Iconsax.star1, size: 16, color: AppColors.primaryLight),
                                   const SizedBox(width: 4),
                                   Text(
                                     "4.9",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
-                                      color: colorScheme
-                                          .onBackground, // 💡 نص ديناميكي
+                                      color: AppColors.textLight, // 💡 نص ديناميكي
                                     ),
                                   ),
                                 ],
@@ -193,7 +170,7 @@ class About extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 2),
+              const SizedBox(height: 20),
 
               // ** وصف الدورة **
               Padding(
@@ -206,7 +183,7 @@ class About extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: colorScheme.onBackground, // 💡 نص ديناميكي
+                        // color: colorScheme.onBackground, // 💡 نص ديناميكي
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -214,7 +191,7 @@ class About extends StatelessWidget {
                       "Master the fundamentals of UI/UX design, including wireframing, prototyping, and user research, to build intuitive, engaging digital products that prioritize usability, accessibility, and user satisfaction.",
                       style: TextStyle(
                         fontSize: 14,
-                        color: colorScheme.onBackground.withOpacity(0.7),
+                        // color: colorScheme.onBackground.withOpacity(0.7),
                       ), // 💡 نص ثانوي ديناميكي
                     ),
                   ],
@@ -224,10 +201,10 @@ class About extends StatelessWidget {
               const SizedBox(height: 60),
 
               // ** معلومات الدروس والـ BUY NOW **
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // رمز التشغيل وعدد الدروس (تم تبسيط هذا الجزء قليلاً ليكون أسهل للقراءة)
+                  // رمز التشغيل وعدد الدروس
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Row(
@@ -238,29 +215,23 @@ class About extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
-                              // 💡 التدرج الديناميكي
                               colors: primaryGradient,
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
                           ),
-                          child: const Icon(
-                            Icons.play_arrow_outlined,
-                            color: AppColors.backgroundLight,
-                            size: 28,
-                          ),
+                          child: const Icon(Iconsax.play, color: AppColors.backgroundLight, size: 28),
                         ),
                         const SizedBox(width: 15),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "63 Lesson",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
-                                color:
-                                    colorScheme.onBackground, // 💡 نص ديناميكي
+                                color: AppColors.textLight,
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -268,9 +239,7 @@ class About extends StatelessWidget {
                               "64 Videos • 30 Sheets • 80 Quiz",
                               style: TextStyle(
                                 fontSize: 10,
-                                color: colorScheme.onBackground.withOpacity(
-                                  0.6,
-                                ), // 💡 نص ثانوي ديناميكي
+                                color: AppColors.textLight.withOpacity(0.6),
                               ),
                             ),
                           ],
@@ -278,34 +247,55 @@ class About extends StatelessWidget {
                       ],
                     ),
                   ),
-
-                  const Spacer(),
-
+                  const SizedBox(height: 12),
                   // ** السعر وزر الشراء **
                   Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            AppColors.primaryLight, // 💡 استخدام اللون الأساسي
-                        foregroundColor: AppColors.secondaryLight,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 12,
-                        ),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundLight,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.textLight.withOpacity(0.05),
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Payment()),
-                        );
-                      },
-                      child: const Text(
-                        "BUY NOW \$120", // 💡 جمعنا السعر مع الزر لتصحيح التصميم
-                        style: TextStyle(fontSize: 14),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "\$120",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textLight,
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primaryLight,
+                              foregroundColor: AppColors.backgroundLight,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Payment()),
+                              );
+                            },
+                            child: const Text("Enroll Now"),
+                          ),
+                        ],
                       ),
                     ),
                   ),

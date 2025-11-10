@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'About.dart';
 import 'ConfirmPayment.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 
 class Payment extends StatefulWidget {
   const Payment({super.key});
@@ -24,7 +25,7 @@ class _PaymentState extends State<Payment> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundLight,
         leading: MaterialButton(
           onPressed: () {
             Navigator.push(
@@ -41,7 +42,7 @@ class _PaymentState extends State<Payment> {
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        // <-- هنا لف الكولمن بالسكرول
+        
         child: Column(
           children: [
             const SizedBox(height: 20),
@@ -50,54 +51,63 @@ class _PaymentState extends State<Payment> {
               child: Container(
                 height: 102,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.backgroundLight,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: const [
                     BoxShadow(
                       color: Colors.grey,
+                      blurStyle: BlurStyle.outer,
                       blurRadius: 10,
-                      spreadRadius: 1,
-                      offset: Offset(4, 4),
+                      spreadRadius: 0.6,
+                      offset: Offset(1, 5),
                     ),
                   ],
                 ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 150,
-                      height: 120,
-                      decoration: BoxDecoration(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        image: const DecorationImage(
-                          image: AssetImage("assets/images/UX_UI.jpg"),
-                          fit: BoxFit.fill,
+                        child: Container(
+                          width: 102,
+                          height: 102,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/UX_UI.jpg"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "UX UI Design",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              "UX UI Design",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            "Learn more about how to build Design system and UI Design",
-                            style: TextStyle(
-                              fontSize: 13,
-                              overflow: TextOverflow.fade,
+                            SizedBox(height: 8),
+                            Text(
+                              "Learn more about how to build Design system and UI Design",
+                              style: TextStyle(
+                                fontSize: 12,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 2,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -108,7 +118,7 @@ class _PaymentState extends State<Payment> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Choose Your Method",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textLight),
                 ),
               ),
             ),
@@ -137,33 +147,28 @@ class _PaymentState extends State<Payment> {
                       width: double.infinity,
                       height: 63,
                       decoration: BoxDecoration(
+                        color: AppColors.backgroundLight,
                         borderRadius: BorderRadius.circular(18),
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 10,
-                            spreadRadius: 1,
-                            offset: Offset(4, 4),
+                            color: Colors.grey.withOpacity(0.3),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                         child: Row(
                           children: [
-                            const SizedBox(width: 10),
                             Container(
-                              width: 30,
-                              height: 20,
+                              width: 40,
+                              height: 40,
                               decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
                                 image: DecorationImage(
                                   image: AssetImage(method["icon"]!),
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
                             ),
@@ -171,9 +176,10 @@ class _PaymentState extends State<Payment> {
                             Expanded(
                               child: Text(
                                 method["title"]!,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
+                                  color: AppColors.textLight,
                                 ),
                               ),
                             ),
@@ -181,7 +187,7 @@ class _PaymentState extends State<Payment> {
                               selectedIndex == index
                                   ? Icons.radio_button_checked
                                   : Icons.radio_button_unchecked,
-                              color: Colors.red,
+                              color: AppColors.primaryLight,
                               size: 25,
                             ),
                           ],
