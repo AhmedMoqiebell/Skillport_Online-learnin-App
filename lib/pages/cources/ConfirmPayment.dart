@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Payment.dart';
-import 'courses_page.dart';
+import 'package:our_flutter_project/main.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 
 class Confirm_Payment extends StatefulWidget {
   @override
@@ -9,35 +10,29 @@ class Confirm_Payment extends StatefulWidget {
 }
 
 class _Confirm_PaymentState extends State<Confirm_Payment> {
-  bool _showConfirmation = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundLight,
         leading: MaterialButton(
           onPressed: () {
-            if (_showConfirmation) {
-              setState(() {
-                _showConfirmation = false;
-              });
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Payment()),
-              );
-            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Payment()),
+            );
           },
-          child: const Icon(Icons.chevron_left, size: 60),
+          child: const Icon(Icons.chevron_left, size: 60, color: AppColors.textLight),
         ),
         title: const Text(
           'Confirm Payment',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textLight),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundLight,
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -56,7 +51,7 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
                         vertical: 17,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: AppColors.primaryLight,
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Row(
@@ -162,7 +157,7 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
                       children: [
                         Text(
                           'Please fill the form',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16, color: AppColors.textLight),
                         ),
                         SizedBox(height: 10),
                         TextFormField(
@@ -229,10 +224,10 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('TOTAL', style: TextStyle(fontSize: 16)),
+                                Text('TOTAL', style: TextStyle(fontSize: 16, color: AppColors.textLight)),
                                 Text(
                                   '\$120.00',
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(fontSize: 16, color: AppColors.textLight),
                                 ),
                               ],
                             ),
@@ -245,21 +240,40 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
                             height: 34,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7),
-                              color: Colors.red,
+                              color: AppColors.primaryLight,
                             ),
                             child: MaterialButton(
-                              onPressed: () {
+                              onPressed: _isLoading ? null : () async {
                                 setState(() {
-                                  _showConfirmation = true;
+                                  _isLoading = true;
                                 });
+                                
+                                // Simulate payment processing
+                                await Future.delayed(const Duration(seconds: 2));
+                                
+                                if (mounted) {
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  _showSuccessBottomSheet();
+                                }
                               },
-                              child: Text(
-                                'Confirm Payment',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
+                              child: _isLoading
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                      ),
+                                    )
+                                  : const Text(
+                                      'Confirm Payment',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                             ),
                           ),
                         ),
@@ -273,96 +287,92 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
             ),
           ),
 
-          // تاب تاكيد الدفع يغطي الشاشة كاملة من الأسفل والجانبين
-          if (_showConfirmation)
-            Positioned(
-              top: 20, // يبدأ من أعلى الشاشة (تحت الـ AppBar)
-              left: 0,
-              right: 0,
-              bottom: 0, // يصل إلى أسفل الشاشة
-              child: Container(
-                color: Colors.black.withOpacity(0.5),
-                child: Column(
-                  children: [
-                    // مساحة فارغة في الأعلى للإبقاء على الـ AppBar مرئي
-                    SizedBox(height: 240),
+        ],
+      ),
+    );
+  }
 
-                    // محتوى تاب التأكيد
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 35),
-                                Text(
-                                  'Congratulations! You have\npurchased a new course',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 20),
-                                Container(
-                                  width: 296,
-                                  height: 296,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    image: const DecorationImage(
-                                      image: AssetImage("assets/images/people.png"),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 30),
-                                Container(
-                                  width: 223,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.red,
-                                  ),
-                                  child: MaterialButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => CoursesPage(),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Back to home',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 20),
-                              ],
-                            ),
-                          ),
-                        ),
+  void _showSuccessBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.5,
+        minChildSize: 0.5,
+        maxChildSize: 0.9,
+        builder: (context, scrollController) => Container(
+          decoration: const BoxDecoration(
+            color: AppColors.backgroundLight,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                const Text(
+                  'Congratulations! You have\nEnrolled a new course',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textLight,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  width: 170,
+                  height: 170,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    image: const DecorationImage(
+                      image: AssetImage("assets/images/people.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: 300,
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryLight,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  ],
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close bottom sheet
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MyApp(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                    child: const Text(
+                      'Back to Home',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 0),
+              ],
             ),
-        ],
+          ),
+        ),
       ),
     );
   }

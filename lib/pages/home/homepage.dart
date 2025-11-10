@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
 import 'package:our_flutter_project/pages/payment/my_account_fl.dart';
+import 'package:our_flutter_project/providers/auth_provider.dart';
+import 'package:our_flutter_project/pages/registration/sginin.dart';
+import 'package:our_flutter_project/pages/cources/About.dart';
 
 class HomePage extends StatefulWidget {
   final String username;
@@ -21,101 +26,120 @@ class _HomePageState extends State<HomePage> {
       // Right-side drawer
       endDrawer: Drawer(
         backgroundColor: AppColors.backgroundLight,
-
         child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(20),
-                color: AppColors.secondaryLight,
-                child: Row(
-                  children: [
-                    const CircleAvatar(
-                      radius: 28,
-                      backgroundImage: AssetImage('assets/images/profile.png'),
+          child: Consumer<AuthProvider>(
+            builder: (context, auth, _) {
+              final bool isLoggedIn = auth.isLoggedIn;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    color: AppColors.secondaryLight,
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 28,
+                          backgroundImage:
+                              AssetImage('assets/images/profile.png'),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                isLoggedIn
+                                    ? (widget.username.isNotEmpty
+                                        ? widget.username
+                                        : 'User')
+                                    : 'Guest',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                isLoggedIn
+                                    ? 'user@example.com'
+                                    : 'Please sign in',
+                                style: const TextStyle(color: Colors.white70),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.username.isNotEmpty
-                                ? widget.username
-                                : 'Guest',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            widget.username.isNotEmpty
-                                ? 'user@example.com'
-                                : 'Please sign in',
-                            style: const TextStyle(color: Colors.white70),
-                          ),
-                        ],
-                      ),
+                  ),
+                  if (!isLoggedIn) ...[
+                    ListTile(
+                      leading: const Icon(Iconsax.login),
+                      title: const Text('Sign In'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const Signin()),
+                        );
+                      },
+                    ),
+                  ] else ...[
+                    ListTile(
+                      leading: const Icon(Iconsax.notification),
+                      title: const Text('Notifications'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _requireLogin(context, () async {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Notifications tapped')),
+                          );
+                        });
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Iconsax.user),
+                      title: const Text('Profile'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _requireLogin(context, () async {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Profile tapped')),
+                          );
+                        });
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Iconsax.wallet),
+                      title: const Text('Payment Info'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _requireLogin(context, () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const MyAccountFl()),
+                          );
+                        });
+                      },
+                    ),
+                    const Spacer(),
+                    ListTile(
+                      leading: const Icon(Iconsax.logout),
+                      title: const Text('Sign Out'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        context.read<AuthProvider>().logout();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Signed out')),
+                        );
+                      },
                     ),
                   ],
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.person),
-                title: const Text('Profile'),
-                onTap: () {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Profile tapped')),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.notifications),
-                title: const Text('Notifications'),
-                onTap: () {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Notifications tapped')),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.account_balance_wallet),
-                title: const Text('Payment Dashboard'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const MyAccountFl()),
-                  );
-                },
-              ),
-              const Spacer(),
-              ListTile(
-                leading: Icon(
-                  widget.username.isNotEmpty ? Icons.logout : Icons.login,
-                ),
-                title: Text(
-                  widget.username.isNotEmpty ? 'Sign Out' : 'Sign In',
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        widget.username.isNotEmpty
-                            ? 'Signed out'
-                            : 'Sign in tapped',
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -169,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                         // Menu button to open right-side drawer
                         IconButton(
                           icon: const Icon(
-                            Icons.menu,
+                            Iconsax.menu,
                             color: AppColors.backgroundLight,
                             size: 28,
                           ),
@@ -186,11 +210,11 @@ class _HomePageState extends State<HomePage> {
                         color: AppColors.backgroundLight,
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: const TextField(
+                      child: TextField(
                         decoration: InputDecoration(
                           hintText: "search anything",
                           border: InputBorder.none,
-                          icon: Icon(Icons.search, color: Colors.grey),
+                          icon: Icon(Iconsax.search_normal, color: AppColors.textLight.withOpacity(0.5)),
                         ),
                       ),
                     ),
@@ -306,7 +330,7 @@ class _HomePageState extends State<HomePage> {
                               child: LinearProgressIndicator(
                                 value: 43 / 64,
                                 color: AppColors.secondaryLight,
-                                backgroundColor: Colors.grey.shade300,
+                                backgroundColor: AppColors.textLight.withOpacity(0.2),
                                 minHeight: 8,
                               ),
                             ),
@@ -342,7 +366,7 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 10),
 
-              // كروسات ثابتة
+              
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -355,64 +379,72 @@ class _HomePageState extends State<HomePage> {
                   childAspectRatio: 3 / 3.6,
                 ),
                 itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.shade200,
-                          blurRadius: 6,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(15),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const About()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundLight,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.textLight.withOpacity(0.1),
+                            blurRadius: 6,
+                            offset: const Offset(0, 4),
                           ),
-                          child: Image.asset(
-                            'assets/images/english.jpg',
-                            height: 90,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "UI UX Design",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(15),
+                            ),
+                            child: Image.asset(
+                              'assets/images/english.jpg',
+                              height: 90,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            "64 Videos · 80 Quiz",
-                            style: TextStyle(fontSize: 12, color: Colors.grey),
-                          ),
-                        ),
-                        const Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: List.generate(
-                              5,
-                              (star) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 16,
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "UI UX Design",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              "64 Videos · 80 Quiz",
+                              style: TextStyle(fontSize: 12, color: AppColors.textLight.withOpacity(0.6)),
+                            ),
+                          ),
+                          const Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: List.generate(
+                                5,
+                                (star) => const Icon(
+                                  Iconsax.star1,
+                                  color: Colors.amber,
+                                  size: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -423,4 +455,35 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+Future<void> _requireLogin(BuildContext context, Future<void> Function() action) async {
+  final isLoggedIn = context.read<AuthProvider>().isLoggedIn;
+  if (isLoggedIn) {
+    await action();
+    return;
+  }
+  await showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Text('Sign in required'),
+      content: const Text('Please sign in to access this feature.'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(ctx).pop(),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(ctx).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const Signin()),
+            );
+          },
+          child: const Text('Sign In'),
+        ),
+      ],
+    ),
+  );
 }

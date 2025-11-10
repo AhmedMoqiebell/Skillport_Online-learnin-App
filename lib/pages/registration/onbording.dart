@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'sginin.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 
 class onbording extends StatefulWidget {
   const onbording({super.key});
@@ -53,7 +55,7 @@ class _onbordingState extends State<onbording> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF), // لون الخلفية
+      backgroundColor: AppColors.backgroundLight,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,7 +92,7 @@ class _onbordingState extends State<onbording> {
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: AppColors.textLight,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -101,7 +103,7 @@ class _onbordingState extends State<onbording> {
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 15,
-                        color: Colors.black54,
+                        color: AppColors.textLight,
                         height: 1.5,
                       ),
                     ),
@@ -133,7 +135,7 @@ class _onbordingState extends State<onbording> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         iconColor: Color(0xffffffff),
-                        backgroundColor: const Color(0xFFE53935), // أحمر
+                        backgroundColor: AppColors.primaryLight,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -156,7 +158,7 @@ class _onbordingState extends State<onbording> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          Icon(Icons.arrow_forward, size: 25),
+                          Icon(Iconsax.arrow_right, size: 25),
                         ],
                       ),
                     ),
@@ -178,7 +180,7 @@ class _onbordingState extends State<onbording> {
       width: isActive ? 20 : 8,
       height: 8,
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xFFE53935) : Colors.black26,
+        color: isActive ? AppColors.primaryLight : AppColors.textLight.withOpacity(0.2),
         borderRadius: BorderRadius.circular(10),
       ),
     );
