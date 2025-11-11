@@ -20,17 +20,17 @@ class About extends StatelessWidget {
         backgroundColor: AppColors.backgroundLight,
         foregroundColor: AppColors.textLight, // لون الأيقونات والنصوص
         elevation: 0,
-
-        leading: IconButton(
-          
-          icon: const Icon(Iconsax.arrow_left, size: 24, color: AppColors.textLight),
-          onPressed: () {
-            
-            Navigator.pop(context);
-            
-            
-          },
-        ),
+        automaticallyImplyLeading: true,
+        // leading: IconButton(
+        //
+        //   icon: const Icon(Iconsax.arrow_left, size: 24, color: AppColors.textLight),
+        //   onPressed: () {
+        //
+        //     Navigator.pop(context);
+        //
+        //
+        //   },
+        // ),
         title: const Text(
           'About Courses',
           style: TextStyle(
@@ -51,8 +51,9 @@ class About extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
+                  height: 312,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(5),
                     // 💡 لون خلفية الحاوية يتغير
                     color: cardBackgroundColor,
                     boxShadow: [
@@ -69,7 +70,7 @@ class About extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 200,
+                        height: 240,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16),
@@ -100,7 +101,7 @@ class About extends StatelessWidget {
                         ),
                       ),
 
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 13),
 
                       // ======= شريط الإحصائيات =======
                       Padding(
@@ -137,7 +138,7 @@ class About extends StatelessWidget {
                               Row(
                                 
                                 children: [
-                                  const Icon(Iconsax.profile_2user, size: 16, color: AppColors.textLight),
+                                  const Icon(Iconsax.profile_2user, size: 37, color: AppColors.textLight),
                                   const SizedBox(width: 4),
                                   Text(
                                     "23.5K",
@@ -148,7 +149,7 @@ class About extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 16),
-                                  const Icon(Iconsax.star1, size: 16, color: AppColors.primaryLight),
+                                  const Icon(Iconsax.star1, size: 19, color: AppColors.primaryLight),
                                   const SizedBox(width: 4),
                                   Text(
                                     "4.9",
@@ -220,7 +221,7 @@ class About extends StatelessWidget {
                               end: Alignment.bottomRight,
                             ),
                           ),
-                          child: const Icon(Iconsax.play, color: AppColors.backgroundLight, size: 28),
+                          child: const Icon(Iconsax.play_circle, color: AppColors.backgroundLight, size: 40),
                         ),
                         const SizedBox(width: 15),
                         Column(

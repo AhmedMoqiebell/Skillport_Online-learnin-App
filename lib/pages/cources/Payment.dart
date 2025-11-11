@@ -26,15 +26,16 @@ class _PaymentState extends State<Payment> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: AppColors.backgroundLight,
-        leading: MaterialButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => About()),
-            );
-          },
-          child: const Icon(Icons.chevron_left, size: 60),
-        ),
+        automaticallyImplyLeading: true,
+        // leading: MaterialButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => About()),
+        //     );
+        //   },
+        //   child: const Icon(Icons.chevron_left, size: 60),
+        // ),
         title: const Text(
           'Payment',
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),

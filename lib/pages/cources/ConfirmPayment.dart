@@ -18,15 +18,16 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: AppColors.backgroundLight,
-        leading: MaterialButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Payment()),
-            );
-          },
-          child: const Icon(Icons.chevron_left, size: 60, color: AppColors.textLight),
-        ),
+        automaticallyImplyLeading: true,
+        // leading: MaterialButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => Payment()),
+        //     );
+        //   },
+        //   child: const Icon(Icons.chevron_left, size: 60, color: AppColors.textLight),
+        // ),
         title: const Text(
           'Confirm Payment',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textLight),
