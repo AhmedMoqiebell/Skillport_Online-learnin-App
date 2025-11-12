@@ -22,11 +22,7 @@ class _My_CoursesState extends State<CoursesPage> {
       'image': 'assets/images/flutter.jpg',
       'route': 'flutter',
     },
-    {
-      'name': 'UX_UI',
-      'image': 'assets/images/UX_UI.jpg',
-      'route': 'UX_UI',
-    },
+    {'name': 'UX_UI', 'image': 'assets/images/UX_UI.jpg', 'route': 'UX_UI'},
     {
       'name': 'program',
       'image': 'assets/images/program.jpg',
@@ -54,11 +50,7 @@ class _My_CoursesState extends State<CoursesPage> {
       'image': 'assets/images/flutter.jpg',
       'route': 'flutter',
     },
-    {
-      'name': 'UX_UI',
-      'image': 'assets/images/UX_UI.jpg',
-      'route': 'UX_UI',
-    },
+    {'name': 'UX_UI', 'image': 'assets/images/UX_UI.jpg', 'route': 'UX_UI'},
     {
       'name': 'program',
       'image': 'assets/images/program.jpg',
@@ -76,13 +68,15 @@ class _My_CoursesState extends State<CoursesPage> {
     },
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         backgroundColor: AppColors.backgroundLight,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        centerTitle: true,
 
         // leading:
         title: const Text(
@@ -105,7 +99,7 @@ class _My_CoursesState extends State<CoursesPage> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 gradient: const LinearGradient(
-                  colors: [Color(0xFFEA3404), Color(0xFFEE5A51)],
+                  colors: [AppColors.primaryLight, AppColors.secondaryLight],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -129,7 +123,10 @@ class _My_CoursesState extends State<CoursesPage> {
                         const SizedBox(height: 20),
                         const Text(
                           "Completed Courses",
-                          style: TextStyle(fontSize: 13, color: AppColors.backgroundLight),
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: AppColors.backgroundLight,
+                          ),
                         ),
                         const SizedBox(height: 20),
                         SizedBox(
@@ -149,12 +146,12 @@ class _My_CoursesState extends State<CoursesPage> {
                     const SizedBox(width: 20),
                     Flexible(
                       child: Container(
-                        width: 145,
-                        height: 135,
+                        width: 170,
+                        height: 170,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(5),
                           image: const DecorationImage(
-                            image: AssetImage("assets/images/photo2.png"),
+                            image: AssetImage("assets/images/studentBoy12.png"),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -200,20 +197,22 @@ class _My_CoursesState extends State<CoursesPage> {
                     borderRadius: BorderRadius.circular(16),
                     gradient: selectedTab == 'All'
                         ? const LinearGradient(
-                      colors: [Color(0xFFE53A0F), Color(0xFFDB5945)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    )
+                            colors: [Color(0xFFE53A0F), Color(0xFFDB5945)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          )
                         : const LinearGradient(
-                      colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                            colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                   ),
                   child: Text(
                     'All',
                     style: TextStyle(
-                      color: selectedTab == 'All' ? AppColors.backgroundLight : AppColors.textLight,
+                      color: selectedTab == 'All'
+                          ? AppColors.backgroundLight
+                          : AppColors.textLight,
                       fontSize: 14,
                     ),
                   ),
@@ -235,15 +234,15 @@ class _My_CoursesState extends State<CoursesPage> {
                     borderRadius: BorderRadius.circular(16),
                     gradient: selectedTab == 'Completed'
                         ? const LinearGradient(
-                      colors: [Color(0xFFE53A0F), Color(0xFFDB5945)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    )
+                            colors: [Color(0xFFE53A0F), Color(0xFFDB5945)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          )
                         : const LinearGradient(
-                      colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                            colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
                   ),
                   child: Text(
                     'Completed',
@@ -284,7 +283,10 @@ class _My_CoursesState extends State<CoursesPage> {
           child: Row(
             children: [
               Expanded(
-                child: _buildCourseItem(context, courses[actualRowIndex * 2 + 1]),
+                child: _buildCourseItem(
+                  context,
+                  courses[actualRowIndex * 2 + 1],
+                ),
               ),
               const SizedBox(width: 5),
               Expanded(
@@ -313,7 +315,10 @@ class _My_CoursesState extends State<CoursesPage> {
               ),
               const SizedBox(width: 5),
               Expanded(
-                child: _buildCourseItem(context, c_courses[actualRowIndex * 2 + 1]),
+                child: _buildCourseItem(
+                  context,
+                  c_courses[actualRowIndex * 2 + 1],
+                ),
               ),
             ],
           ),
@@ -383,7 +388,9 @@ class _My_CoursesState extends State<CoursesPage> {
                       child: LinearProgressIndicator(
                         value: 0.99,
                         backgroundColor: AppColors.backgroundLight,
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.redAccent,
+                        ),
                         minHeight: 8,
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -395,14 +402,8 @@ class _My_CoursesState extends State<CoursesPage> {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    '64 Videos',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  Text(
-                    '80 Quiz',
-                    style: TextStyle(fontSize: 10),
-                  ),
+                  Text('64 Videos', style: TextStyle(fontSize: 10)),
+                  Text('80 Quiz', style: TextStyle(fontSize: 10)),
                 ],
               ),
             ],
@@ -417,9 +418,7 @@ class _My_CoursesState extends State<CoursesPage> {
     return Container(
       width: 200,
       height: 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Image.asset(

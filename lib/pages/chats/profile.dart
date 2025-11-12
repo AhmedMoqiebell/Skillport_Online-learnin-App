@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
 import 'package:our_flutter_project/pages/payment/my_account_fl.dart';
 import 'package:our_flutter_project/pages/profile/negative.dart';
 import 'package:our_flutter_project/pages/profile/notifications.dart';
+import 'package:our_flutter_project/providers/auth_provider.dart';
+import 'package:our_flutter_project/pages/registration/sginin.dart';
 
 import 'edit_profile_page.dart';
 
@@ -12,7 +15,92 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        // If user is not logged in, show sign in prompt
+        if (!authProvider.isLoggedIn) {
+          return Scaffold(
+            backgroundColor: AppColors.backgroundLight,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: const Text(
+                'Profile',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textLight,
+                ),
+              ),
+              centerTitle: true,
+            ),
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Iconsax.profile_circle,
+                      size: 100,
+                      color: AppColors.primaryLight.withOpacity(0.5),
+                    ),
+                    const SizedBox(height: 24),
+                    const Text(
+                      'Sign In Required',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textLight,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Please sign in to access your profile',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.textLight,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryLight,
+                        foregroundColor: AppColors.backgroundLight,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 16,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Signin(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+
+        // If user is logged in, show normal profile content
+        return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       body: Stack(
         children: [
@@ -142,6 +230,8 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
+    );
+      },
     );
   }
 }

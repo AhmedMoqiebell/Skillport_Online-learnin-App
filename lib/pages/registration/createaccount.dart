@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:our_flutter_project/main.dart';
+import 'package:our_flutter_project/widgets/main_navigation.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:our_flutter_project/providers/auth_provider.dart';
@@ -178,7 +178,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       context.read<AuthProvider>().login();
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (_) => const MyApp()),
+                        MaterialPageRoute(builder: (_) => const MainNavigation()),
                       );
                     }
                   },

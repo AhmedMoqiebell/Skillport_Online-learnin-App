@@ -2,35 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
 import 'chat_detail.dart';
 
-
 class ChatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     final size = MediaQuery.of(context).size;
     final height = size.height;
     final width = size.width;
 
-    
-    double font(double v) => v * width / 390;   
-    double h(double v) => v * height / 844;     
+    double font(double v) => v * width / 390;
+    double h(double v) => v * height / 844;
     double w(double v) => v * width / 390;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      
       appBar: AppBar(
-        backgroundColor:AppColors.secondaryLight,
-        
+        backgroundColor: AppColors.backgroundLight,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         title: Text(
           'Chats',
           style: TextStyle(
-            color: Colors.black,
-            fontSize: font(25),
+            color: AppColors.textLight,
+            fontSize: font(24),
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        elevation: 0,
         toolbarHeight: h(100),
       ),
 
@@ -44,7 +42,7 @@ class ChatsPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFFFBF3F2),
                 borderRadius: BorderRadius.circular(h(27.5)),
-                border: Border.all(color: const Color(0xFFD44035), width: 1),
+                border: Border.all(color: AppColors.primaryLight, width: 1),
               ),
               child: const TextField(
                 decoration: InputDecoration(
@@ -57,7 +55,6 @@ class ChatsPage extends StatelessWidget {
             ),
           ),
 
-          
           Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: w(16)),
@@ -68,7 +65,7 @@ class ChatsPage extends StatelessWidget {
                     "Active",
                     style: TextStyle(
                       color: const Color(0xff0F0606),
-                      fontSize: font(20),
+                      fontSize: font(16),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -109,7 +106,7 @@ class ChatsPage extends StatelessWidget {
                     "Messages",
                     style: TextStyle(
                       color: const Color(0xff0F0606),
-                      fontSize: font(20),
+                      fontSize: font(16),
                       fontWeight: FontWeight.bold,
                     ),
                   ),

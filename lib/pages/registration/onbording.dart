@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 import 'sginin.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:our_flutter_project/theme/app_colors.dart';
 
 class onbording extends StatefulWidget {
   const onbording({super.key});

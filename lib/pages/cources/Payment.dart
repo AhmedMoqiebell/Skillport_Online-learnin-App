@@ -41,7 +41,7 @@ class _PaymentState extends State<Payment> {
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundLight,
       body: SingleChildScrollView(
         
         child: Column(

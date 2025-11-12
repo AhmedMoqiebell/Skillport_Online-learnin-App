@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
+import 'package:our_flutter_project/providers/auth_provider.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({super.key});
@@ -73,7 +75,11 @@ class EditProfilePage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                // ضع كود تسجيل الخروج هنا
+                Navigator.pop(context);
+                        context.read<AuthProvider>().logout();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Signed out')),
+                        );
               },
               child: const Text(
                 'Log out',
