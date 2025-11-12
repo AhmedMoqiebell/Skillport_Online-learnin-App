@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Payment.dart';
-import 'package:our_flutter_project/main.dart';
+import 'package:our_flutter_project/widgets/main_navigation.dart';
 import 'package:our_flutter_project/theme/app_colors.dart';
 
 class Confirm_Payment extends StatefulWidget {
@@ -237,8 +237,8 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
                         SizedBox(height: 40),
                         Center(
                           child: Container(
-                            width: 159,
-                            height: 34,
+                            width: 160,
+                            height: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7),
                               color: AppColors.primaryLight,
@@ -272,7 +272,7 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
                                       'Confirm Payment',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 12,
+                                        fontSize: 14,
                                       ),
                                     ),
                             ),
@@ -339,7 +339,7 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                  width: 300,
+                  width: 200,
                   height: 40,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -354,7 +354,7 @@ class _Confirm_PaymentState extends State<Confirm_Payment> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MyApp(),
+                          builder: (context) => const MainNavigation(),
                         ),
                         (route) => false,
                       );

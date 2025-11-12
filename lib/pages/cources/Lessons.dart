@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'courses_page.dart';
+
+import 'package:iconsax/iconsax.dart';
+import 'package:our_flutter_project/theme/app_colors.dart';
 
 class Lessons extends StatelessWidget {
   String? photo;
@@ -9,21 +11,26 @@ class Lessons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         automaticallyImplyLeading: true,
         centerTitle: true,
-        backgroundColor: Colors.white,
+
+        backgroundColor: AppColors.backgroundLight,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
 
         title: const Text(
           'Lessons',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor:AppColors.backgroundLight,
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(35.0),
+            padding: const EdgeInsets.all(16.0),
             child: Container(
               height: 270,
               width: double.infinity,
@@ -52,16 +59,12 @@ class Lessons extends StatelessWidget {
                     child: Stack(
                       alignment: Alignment.center,
                       children: const [
-                        Icon(
-                          Icons.play_circle_fill,
-                          size: 60,
-                          color: Colors.white70,
-                        ),
+                        Icon(Iconsax.play, size: 60, color: Colors.white),
                         Text(
                           "How to get started",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 35,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -169,33 +172,29 @@ class Lessons extends StatelessWidget {
               SizedBox(width: 40),
               Text(
                 'All Videos',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ],
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 6.0),
                   child: Column(
                     children: [
                       SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(18),
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          color: Colors.white,
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -264,9 +263,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -335,9 +334,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -406,9 +405,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -477,9 +476,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -548,9 +547,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -619,9 +618,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -690,9 +689,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -761,9 +760,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -832,9 +831,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -903,9 +902,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),
@@ -974,9 +973,9 @@ class Lessons extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 3,
                               spreadRadius: 1,
-                              offset: Offset(4, 4),
+                              offset: Offset(1, 3),
                             ),
                           ],
                         ),

@@ -6,6 +6,8 @@ import 'package:our_flutter_project/pages/payment/my_account_fl.dart';
 import 'package:our_flutter_project/providers/auth_provider.dart';
 import 'package:our_flutter_project/pages/registration/sginin.dart';
 import 'package:our_flutter_project/pages/cources/About.dart';
+import 'package:our_flutter_project/pages/profile/notifications.dart';
+import 'package:our_flutter_project/pages/chats/profile.dart';
 
 class HomePage extends StatefulWidget {
   final String username;
@@ -40,8 +42,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         const CircleAvatar(
                           radius: 28,
-                          backgroundImage:
-                              AssetImage('assets/images/profile.png'),
+                          backgroundColor: AppColors.backgroundLight,
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -51,8 +52,8 @@ class _HomePageState extends State<HomePage> {
                               Text(
                                 isLoggedIn
                                     ? (widget.username.isNotEmpty
-                                        ? widget.username
-                                        : 'User')
+                                          ? widget.username
+                                          : 'User')
                                     : 'Guest',
                                 style: const TextStyle(
                                   fontSize: 18,
@@ -92,8 +93,11 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         Navigator.pop(context);
                         _requireLogin(context, () async {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Notifications tapped')),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => NotificationPage(),
+                            ),
                           );
                         });
                       },
@@ -104,8 +108,11 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         Navigator.pop(context);
                         _requireLogin(context, () async {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Profile tapped')),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const ProfilePage(),
+                            ),
                           );
                         });
                       },
@@ -119,7 +126,8 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => const MyAccountFl()),
+                              builder: (_) => const MyAccountFl(),
+                            ),
                           );
                         });
                       },
@@ -165,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // الصف العلوي (اسم + بروفايل + أيقونة)
+                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -214,7 +222,10 @@ class _HomePageState extends State<HomePage> {
                         decoration: InputDecoration(
                           hintText: "search anything",
                           border: InputBorder.none,
-                          icon: Icon(Iconsax.search_normal, color: AppColors.textLight.withOpacity(0.5)),
+                          icon: Icon(
+                            Iconsax.search_normal,
+                            color: AppColors.textLight.withOpacity(0.5),
+                          ),
                         ),
                       ),
                     ),
@@ -281,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                           // top row: image + texts
                           Row(
                             children: [
-                              // صورة الكورس يسار
+                              
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.asset(
@@ -330,7 +341,8 @@ class _HomePageState extends State<HomePage> {
                               child: LinearProgressIndicator(
                                 value: 43 / 64,
                                 color: AppColors.secondaryLight,
-                                backgroundColor: AppColors.textLight.withOpacity(0.2),
+                                backgroundColor: AppColors.textLight
+                                    .withOpacity(0.2),
                                 minHeight: 8,
                               ),
                             ),
@@ -366,12 +378,11 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 10),
 
-              
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: 4,
+                itemCount: 8,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 12,
@@ -387,6 +398,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     },
                     child: Container(
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: AppColors.backgroundLight,
                         borderRadius: BorderRadius.circular(15),
@@ -399,7 +411,8 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ClipRRect(
                             borderRadius: const BorderRadius.vertical(
@@ -412,37 +425,46 @@ class _HomePageState extends State<HomePage> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              "UI UX Design",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              "64 Videos · 80 Quiz",
-                              style: TextStyle(fontSize: 12, color: AppColors.textLight.withOpacity(0.6)),
-                            ),
-                          ),
-                          const Spacer(),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              children: List.generate(
-                                5,
-                                (star) => const Icon(
-                                  Iconsax.star1,
-                                  color: Colors.amber,
-                                  size: 16,
+                              children: [
+                                const Text(
+                                  "UI UX Design",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
+                                const SizedBox(width: 8),
+                                Row(
+                                  children: List.generate(
+                                    5,
+                                    (star) => const Icon(
+                                      Iconsax.star1,
+                                      color: Colors.amber,
+                                      size: 11,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            child: Text(
+                              "64 Videos · 80 Quiz",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.textLight.withOpacity(0.6),
                               ),
                             ),
                           ),
+                          
+                          
                         ],
                       ),
                     ),
@@ -457,7 +479,10 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Future<void> _requireLogin(BuildContext context, Future<void> Function() action) async {
+Future<void> _requireLogin(
+  BuildContext context,
+  Future<void> Function() action,
+) async {
   final isLoggedIn = context.read<AuthProvider>().isLoggedIn;
   if (isLoggedIn) {
     await action();
