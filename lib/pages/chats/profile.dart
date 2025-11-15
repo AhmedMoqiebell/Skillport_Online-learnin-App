@@ -101,54 +101,107 @@ class ProfilePage extends StatelessWidget {
 
         // If user is logged in, show normal profile content
         return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      body: Stack(
-        children: [
-          
-          SingleChildScrollView(
-            padding: const EdgeInsets.only(top: 200), 
+          backgroundColor: AppColors.backgroundLight,
+          body: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 60), 
-                const Text(
-                  'Ahmed',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textLight,
+                Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      height: 140,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment(-0.07, -0.06),
+                          end: Alignment(0.65, 0.87),
+                          colors: [
+                            AppColors.primaryLight,
+                            AppColors.secondaryLight,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
+                      alignment: Alignment.bottomCenter,
+                      padding: const EdgeInsets.only(bottom: 36),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Text(
+                            'Profile',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.backgroundLight,
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      bottom: -60,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundColor: AppColors.backgroundLight,
+                        child: const CircleAvatar(
+                          radius: 46,
+                          backgroundImage:
+                              AssetImage('assets/images/profile.png'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 70),
+                const Center(
+                  child: Text(
+                    'Ahmed',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textLight,
+                    ),
                   ),
                 ),
-                const Text(
-                  'amoqiebel736@gmail.com',
-                  style: TextStyle(color: AppColors.textLight),
+                const SizedBox(height: 4),
+                const Center(
+                  child: Text(
+                    'amoqiebel736@gmail.com',
+                    style: TextStyle(color: AppColors.textLight),
+                  ),
                 ),
                 const SizedBox(height: 10),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryLight,
-                    foregroundColor: AppColors.backgroundLight,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 8,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EditProfilePage(),
+                Center(
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryLight,
+                      foregroundColor: AppColors.backgroundLight,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                    );
-                  },
-                  icon: const Icon(Iconsax.edit),
-                  label: const Text('edit profile'),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfilePage(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Iconsax.edit),
+                    label: const Text('edit profile'),
+                  ),
                 ),
-                const SizedBox(height: 20),
-
-                // ===== مربعات الاحصائيات =====
+                const SizedBox(height: 24),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
@@ -160,77 +213,60 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 20),
-
-                // ===== خيارات القائمة =====
-                const _OptionTile(
-                  icon: Iconsax.moon,
-                  title: 'Dark Mode',
-                  hasSwitch: true,
+                const SizedBox(height: 24),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    children: [
+                      _OptionTile(
+                        icon: Iconsax.moon,
+                        title: 'Dark Mode',
+                        hasSwitch: true,
+                        switchValue: false,
+                        onSwitchChanged: (value) {},
+                      ),
+                      _OptionTile(
+                        icon: Iconsax.wallet,
+                        title: 'Payment Details',
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyAccountFl(),
+                          ),
+                        ),
+                      ),
+                      _OptionTile(
+                        icon: Iconsax.notification,
+                        title: 'Notifications',
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NotificationPage(),
+                          ),
+                        ),
+                      ),
+                      _OptionTile(
+                        icon: Iconsax.star,
+                        title: 'Rate & Review',
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NegativeReviewsPage(),
+                          ),
+                        ),
+                      ),
+                      const _OptionTile(
+                        icon: Iconsax.message_question,
+                        title: 'Help',
+                      ),
+                      const SizedBox(height: 40),
+                    ],
+                  ),
                 ),
-                _OptionTile(
-                  icon: Iconsax.wallet,
-                  title: 'Payment Details',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MyAccountFl())),
-                  
-                ),
-                _OptionTile(
-                  icon: Iconsax.notification,
-                  title: 'Notifications',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage())),
-                ),
-                _OptionTile(
-                  icon: Iconsax.star,
-                  title: 'Rate & Review',
-                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => NegativeReviewsPage())),
-                ),
-                const _OptionTile(icon: Iconsax.message_question, title: 'Help'),
-                const SizedBox(height: 40),
               ],
             ),
           ),
-
-          
-          Container(
-            height: 150,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment(-0.07, -0.06),
-                end: Alignment(0.65, 0.87),
-                colors: [AppColors.primaryLight, AppColors.secondaryLight],
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-            ),
-            alignment: const Alignment(0, 0.4),
-            child: const Text(
-              'Profile',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: AppColors.backgroundLight,
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: 120,
-            left: MediaQuery.of(context).size.width / 2 - 50,
-            child: CircleAvatar(
-              radius: 50,
-              backgroundColor: AppColors.backgroundLight,
-              child: const CircleAvatar(
-                radius: 46,
-                backgroundImage: AssetImage('assets/images/profile.png'),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        );
       },
     );
   }
