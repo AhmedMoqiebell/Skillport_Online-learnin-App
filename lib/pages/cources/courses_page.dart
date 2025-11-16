@@ -13,7 +13,7 @@ class _My_CoursesState extends State<CoursesPage> {
   // قائمة الكورسات مع المسارات الصحيحة
   List<Map<String, dynamic>> courses = [
     {
-      'name': 'Security',
+      'name': 'Securityg',
       'image': 'assets/images/security.jpg',
       'route': 'security',
     },
@@ -350,9 +350,22 @@ class _My_CoursesState extends State<CoursesPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // استدعاء الدالة المعدلة لتحميل الصورة
-              _buildImageWidget(course['image']),
+              // صورة الكورس (دمج الدالة داخل نفس الودجت)
+              Container(
+                width: 200,
+                height: 100,
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    course['image'],
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+
               const SizedBox(height: 5),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Row(
@@ -379,16 +392,17 @@ class _My_CoursesState extends State<CoursesPage> {
                   ],
                 ),
               ),
+
               Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    child: SizedBox(
                       width: 100,
                       child: LinearProgressIndicator(
                         value: 0.99,
                         backgroundColor: AppColors.backgroundLight,
-                        valueColor: AlwaysStoppedAnimation<Color>(
+                        valueColor: const AlwaysStoppedAnimation<Color>(
                           Colors.redAccent,
                         ),
                         minHeight: 8,
@@ -398,7 +412,9 @@ class _My_CoursesState extends State<CoursesPage> {
                   ),
                 ],
               ),
+
               const SizedBox(height: 0.1),
+
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -413,26 +429,4 @@ class _My_CoursesState extends State<CoursesPage> {
     );
   }
 
-  // دالة مساعدة لتحميل الصور مع معالجة الأخطاء
-  Widget _buildImageWidget(String imagePath) {
-    return Container(
-      width: 200,
-      height: 100,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Image.asset(
-          imagePath,
-          fit: BoxFit.fill,
-          errorBuilder: (context, error, stackTrace) {
-            print('Error loading image: $imagePath');
-            return Container(
-              color: AppColors.textLight.withOpacity(0.5),
-              child: const Icon(Icons.error),
-            );
-          },
-        ),
-      ),
-    );
-  }
 }
