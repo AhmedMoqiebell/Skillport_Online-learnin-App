@@ -51,9 +51,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Text(
                                 isLoggedIn
-                                    ? (widget.username.isNotEmpty
-                                          ? widget.username
-                                          : 'User')
+                                    ? (auth.userEmail?.split('@').first ?? 'User')
                                     : 'Guest',
                                 style: const TextStyle(
                                   fontSize: 18,
@@ -64,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(height: 4),
                               Text(
                                 isLoggedIn
-                                    ? 'user@example.com'
+                                    ? (auth.userEmail ?? 'user@example.com')
                                     : 'Please sign in',
                                 style: const TextStyle(color: Colors.white70),
                               ),
@@ -339,14 +337,16 @@ class _HomePageState extends State<HomePage> {
                               width: double.infinity,
                               height: 6,
                               child: LinearProgressIndicator(
-                                value: 43 / 64,
-                                color: AppColors.secondaryLight,
-                                backgroundColor: AppColors.textLight
-                                    .withOpacity(0.2),
+                                value: 46 / 64,
+                                backgroundColor: AppColors.backgroundLight,
+                                color: AppColors.secondaryLight
+                                    ,
                                 minHeight: 8,
                               ),
                             ),
+                            
                           ),
+                          
                         ],
                       ),
                     );

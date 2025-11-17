@@ -8,6 +8,7 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthProvider>();
     return Scaffold(
       backgroundColor: const Color(0xFFFBF3F2),
       appBar: AppBar(
@@ -39,13 +40,13 @@ class EditProfilePage extends StatelessWidget {
               backgroundColor: AppColors.backgroundLight,
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Ahmed',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Text(
+              authProvider.userEmail?.split('@').first ?? 'User',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const Text(
-              'amoqiebel736@gmail.com',
-              style: TextStyle(color: Colors.black54),
+            Text(
+              authProvider.userEmail ?? 'user@example.com',
+              style: const TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 30),
 

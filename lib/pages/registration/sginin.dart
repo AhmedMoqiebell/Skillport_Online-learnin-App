@@ -218,8 +218,9 @@ class _SigninState extends State<Signin> {
                             setState(() => _isLoading = true);
                             await Future.delayed(const Duration(seconds: 1));
                             if (mounted) {
-                              // Mark as logged in
-                              context.read<AuthProvider>().login();
+                              // Mark as logged in and save email
+                              final email = _emailController.text.trim();
+                              context.read<AuthProvider>().login(email: email);
                               setState(() => _isLoading = false);
                               Navigator.pushAndRemoveUntil(
                                 context,

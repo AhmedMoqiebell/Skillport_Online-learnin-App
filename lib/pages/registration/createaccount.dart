@@ -174,8 +174,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     debugPrint('Button pressed');
                     if (_formKey.currentState!.validate()) {
                       debugPrint('Creating account with:');
-                      // After successful registration, log in
-                      context.read<AuthProvider>().login();
+                      // After successful registration, log in and save email
+                      final email = _emailController.text.trim();
+                      context.read<AuthProvider>().login(email: email);
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (_) => const MainNavigation()),
