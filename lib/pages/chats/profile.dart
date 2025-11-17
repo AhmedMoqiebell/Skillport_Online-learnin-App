@@ -158,10 +158,10 @@ class ProfilePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 70),
-                const Center(
+                Center(
                   child: Text(
-                    'Ahmed',
-                    style: TextStyle(
+                    authProvider.userEmail?.split('@').first ?? 'User',
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textLight,
@@ -169,10 +169,10 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                const Center(
+                Center(
                   child: Text(
-                    'amoqiebel736@gmail.com',
-                    style: TextStyle(color: AppColors.textLight),
+                    authProvider.userEmail ?? 'user@example.com',
+                    style: const TextStyle(color: AppColors.textLight),
                   ),
                 ),
                 const SizedBox(height: 10),
