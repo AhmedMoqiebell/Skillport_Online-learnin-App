@@ -337,7 +337,7 @@ class _HomePageState extends State<HomePage> {
                               width: double.infinity,
                               height: 6,
                               child: LinearProgressIndicator(
-                                value: 46 / 64,
+                                value: 47 / 64,
                                 backgroundColor: AppColors.backgroundLight,
                                 color: AppColors.secondaryLight
                                     ,
